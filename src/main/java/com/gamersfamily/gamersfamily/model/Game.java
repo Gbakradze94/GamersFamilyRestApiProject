@@ -1,6 +1,7 @@
 package com.gamersfamily.gamersfamily.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.Set;
         name = "games",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
 )
+@EqualsAndHashCode(callSuper = true)
 public class Game extends BaseEntity{
 
     @Column(name = "name", nullable = false, length = 50)
@@ -31,5 +33,5 @@ public class Game extends BaseEntity{
             joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "platform")
-    private Set<Platform> type;
+    private Set<Platform> platform;
 }

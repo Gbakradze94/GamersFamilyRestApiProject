@@ -1,6 +1,7 @@
 package com.gamersfamily.gamersfamily.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.UniqueConstraint;
         name = "news",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
 )
+@EqualsAndHashCode(callSuper = true)
 public class News extends BaseEntity{
     @Column(name = "name", nullable = false, length = 50)
     private String name;
