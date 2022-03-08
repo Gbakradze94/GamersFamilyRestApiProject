@@ -10,11 +10,17 @@ import java.util.Arrays;
 public class RateConverter implements AttributeConverter<Rate, Long> {
     @Override
     public Long convertToDatabaseColumn(Rate attribute) {
+        if (attribute == null) {
+            return null;
+        }
         return attribute.getRate();
     }
 
     @Override
     public Rate convertToEntityAttribute(Long dbData) {
+        if (dbData == null) {
+            return null;
+        }
         return Arrays.stream(Rate.values()).filter(val -> val.getRate() == dbData).findFirst().orElseThrow(() -> {
             throw new IllegalArgumentException("wrong input data");
         });
