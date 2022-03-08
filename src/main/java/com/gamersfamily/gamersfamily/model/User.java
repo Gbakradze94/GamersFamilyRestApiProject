@@ -1,6 +1,7 @@
 package com.gamersfamily.gamersfamily.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.Set;
         @UniqueConstraint(columnNames = {"username"}),
         @UniqueConstraint(columnNames = {"email"})
 })
+@EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity{
 
     @Column(name = "username", nullable = false, length = 50)
