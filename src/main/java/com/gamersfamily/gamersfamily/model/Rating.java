@@ -31,20 +31,21 @@ public class Rating extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rating rating = (Rating) o;
-        return rate == rating.rate && Objects.equals(author, rating.author) && Objects.equals(news, rating.news);
+        return getRate() == rating.getRate() && Objects.equals(getAuthor(), rating.getAuthor()) && Objects.equals(getNews(), rating.getNews());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rate, author, news);
+        return Objects.hash(getRate(), getAuthor(), getNews());
     }
 
     @Override
     public String toString() {
         return "Rating{" +
-                "rate=" + rate +
-                ", author=" + author +
-                ", news=" + news +
+                "ID: " + getId() +
+                ", rate=" + getRate() +
+                ", author=" + getAuthor() +
+                ", news=" + getNews() +
                 '}';
     }
 }

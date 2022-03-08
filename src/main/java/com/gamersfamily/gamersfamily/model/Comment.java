@@ -1,7 +1,6 @@
 package com.gamersfamily.gamersfamily.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -33,20 +32,23 @@ public class Comment extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return Objects.equals(body, comment.body) && Objects.equals(author, comment.author) && Objects.equals(news, comment.news);
+        return Objects.equals(getBody(), comment.getBody()) &&
+                Objects.equals(getAuthor(), comment.getAuthor()) &&
+                Objects.equals(getNews(), comment.getNews());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(body, author, news);
+        return Objects.hash(getBody(), getAuthor(), getNews());
     }
 
     @Override
     public String toString() {
         return "Comment{" +
-                "body='" + body + '\'' +
-                ", author=" + author +
-                ", news=" + news +
+                "ID: " + getId() +
+                ", body='" + getBody() + '\'' +
+                ", author=" + getAuthor() +
+                ", news=" + getNews() +
                 '}';
     }
 }

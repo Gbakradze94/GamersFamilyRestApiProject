@@ -27,20 +27,23 @@ public class SubComment extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SubComment that = (SubComment) o;
-        return Objects.equals(body, that.body) && Objects.equals(author, that.author) && Objects.equals(comment, that.comment);
+        return Objects.equals(getBody(), that.getBody())
+                && Objects.equals(getAuthor(), that.getAuthor())
+                && Objects.equals(getComment(), that.getComment());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(body, author, comment);
+        return Objects.hash(getBody(), getAuthor(), getComment());
     }
 
     @Override
     public String toString() {
         return "SubComment{" +
-                "body='" + body + '\'' +
-                ", author=" + author +
-                ", comment=" + comment +
+                "ID: " + getId() +
+                ", body='" + getBody() + '\'' +
+                ", author=" + getAuthor() +
+                ", comment=" + getComment() +
                 '}';
     }
 }

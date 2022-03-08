@@ -17,10 +17,6 @@ public class RateConverter implements AttributeConverter<Rate, Long> {
     public Rate convertToEntityAttribute(Long dbData) {
         return Arrays.stream(Rate.values()).filter(val -> val.getRate() == dbData).findFirst().orElseThrow(() -> {
             throw new IllegalArgumentException("wrong input data");
-
         });
-
     }
-
-
 }

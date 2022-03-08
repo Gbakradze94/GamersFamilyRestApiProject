@@ -1,11 +1,13 @@
 package com.gamersfamily.gamersfamily.model;
-
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(
         name = "news",
@@ -20,4 +22,28 @@ public class News extends BaseEntity {
     private List<Comment> comments;
     @OneToMany(mappedBy = "news")
     private List<Rating> ratings;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        News news = (News) o;
+        return Objects.equals(getName(), news.getName()) &&
+                Objects.equals(getBody(), news.getBody());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getBody());
+    }
+
+    @Override
+    public String toString() {
+        return "News{" +
+                "ID: " + getId() +
+                ", name='" + getName() + '\'' +
+                ", body=" + getBody() +
+                '}';
+    }
+
 }
