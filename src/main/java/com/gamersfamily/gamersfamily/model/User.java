@@ -3,6 +3,7 @@ package com.gamersfamily.gamersfamily.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -11,7 +12,7 @@ import java.util.Set;
         @UniqueConstraint(columnNames = {"username"}),
         @UniqueConstraint(columnNames = {"email"})
 })
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
     @Column(name = "username", nullable = false, length = 50)
     private String username;
@@ -29,4 +30,13 @@ public class User extends BaseEntity{
     )
     private Set<Role> roles;
 
+
+    @OneToMany(mappedBy = "author")
+    private List<Comment> comment;
+
+    @OneToMany(mappedBy = "author")
+    private List<SubComment> subCommentList;
+
+    @OneToMany(mappedBy="author")
+    private List<Rating> ratings;
 }
