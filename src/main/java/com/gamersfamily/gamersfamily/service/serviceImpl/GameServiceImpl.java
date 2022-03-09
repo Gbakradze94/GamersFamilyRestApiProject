@@ -1,14 +1,11 @@
-package com.gamersfamily.gamersfamily.service.serviceImpl;
+package com.gamersfamily.gamersfamily.service.ServiceImpl;
 
 import com.gamersfamily.gamersfamily.dto.GameDto;
-import com.gamersfamily.gamersfamily.model.Game;
 import com.gamersfamily.gamersfamily.repository.GameRepository;
 import com.gamersfamily.gamersfamily.service.GameService;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,13 +13,11 @@ import java.util.stream.Collectors;
 @Service
 public class GameServiceImpl implements GameService {
 
-    private final GameRepository gameRepository;
-    private final ModelMapper modelMapper;
+    @Autowired
+    private GameRepository gameRepository;
 
-    public GameServiceImpl(GameRepository gameRepository, ModelMapper modelMapper) {
-        this.gameRepository = gameRepository;
-        this.modelMapper = modelMapper;
-    }
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<GameDto> getAllGames() {
@@ -33,16 +28,6 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameDto> getGamesByPage(Integer pageNumber, Integer pageSize) {
-        Pageable pages = PageRequest.of(pageNumber,pageSize);
-        return gameRepository.findAll(pages)
-                .getContent()
-                .stream()
-                .map(game -> modelMapper.map(game,GameDto.class))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public Game saveGame(GameDto gameDto) {
-        return gameRepository.save(modelMapper.map(gameDto,Game.class));
+        return null;
     }
 }
