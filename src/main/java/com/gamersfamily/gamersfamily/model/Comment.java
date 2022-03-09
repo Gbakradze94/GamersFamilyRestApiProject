@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Setter
@@ -22,6 +22,10 @@ public class Comment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "news_id")
     private News news;
+    @Column(name="creationTime")
+    private LocalDateTime createdAt= LocalDateTime.now();
+    @Column(name="updateTime")
+    private LocalDateTime updated;
 
     @OneToMany(mappedBy = "comment")
     private List<SubComment> subCommentList;
@@ -30,10 +34,11 @@ public class Comment extends BaseEntity {
     @Override
     public String toString() {
         return "Comment{" +
-                "ID: " + getId() +
-                ", body='" + getBody() + '\'' +
-                ", author=" + getAuthor() +
-                ", news=" + getNews() +
+                "body='" + body + '\'' +
+                ", author=" + author +
+                ", news=" + news +
+                ", createdAt=" + createdAt +
+                ", updated=" + updated +
                 '}';
     }
 }

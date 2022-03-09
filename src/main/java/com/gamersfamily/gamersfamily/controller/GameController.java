@@ -2,6 +2,7 @@ package com.gamersfamily.gamersfamily.controller;
 
 
 import com.gamersfamily.gamersfamily.dto.GameDto;
+import com.gamersfamily.gamersfamily.model.Comment;
 import com.gamersfamily.gamersfamily.model.Game;
 import com.gamersfamily.gamersfamily.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.List;
 @RestController
 public class GameController {
 
-
+/*
     private final GameService gameService;
 
    public GameController(GameService gameService){
@@ -42,4 +43,6 @@ public class GameController {
 
 
 
+
+ */
 }

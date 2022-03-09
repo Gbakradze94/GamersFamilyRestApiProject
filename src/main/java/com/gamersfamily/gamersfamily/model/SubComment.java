@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.time.LocalDateTime;
 
 @Entity
 @Setter
@@ -22,14 +22,19 @@ public class SubComment extends BaseEntity {
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
+    @Column(name="creationTime")
+    private LocalDateTime createdAt= LocalDateTime.now();
+    @Column(name="updateTime")
+    private LocalDateTime updated;
 
     @Override
     public String toString() {
         return "SubComment{" +
-                "ID: " + getId() +
-                ", body='" + getBody() + '\'' +
-                ", author=" + getAuthor() +
-                ", comment=" + getComment() +
+                "body='" + body + '\'' +
+                ", author=" + author +
+                ", comment=" + comment +
+                ", createdAt=" + createdAt +
+                ", updated=" + updated +
                 '}';
     }
 }
