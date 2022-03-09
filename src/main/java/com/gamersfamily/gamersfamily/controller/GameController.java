@@ -23,4 +23,6 @@ public class GameController {
     public ResponseEntity<List<GameDto>> getGames(){
         return new ResponseEntity<>(gameServiceImpl.getAllGames(), HttpStatus.OK);
     }
+
+
 }
