@@ -24,18 +24,6 @@ public class Rating extends BaseEntity {
     @JoinColumn(name = "news_id")
     private News news;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Rating rating = (Rating) o;
-        return getRate() == rating.getRate() && Objects.equals(getAuthor(), rating.getAuthor()) && Objects.equals(getNews(), rating.getNews());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getRate(), getAuthor(), getNews());
-    }
 
     @Override
     public String toString() {

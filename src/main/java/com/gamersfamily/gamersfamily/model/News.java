@@ -26,19 +26,6 @@ public class News extends BaseEntity {
     @OneToMany(mappedBy = "news")
     private List<Rating> ratings;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        News news = (News) o;
-        return Objects.equals(getName(), news.getName()) &&
-                Objects.equals(getBody(), news.getBody());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getBody());
-    }
 
     @Override
     public String toString() {

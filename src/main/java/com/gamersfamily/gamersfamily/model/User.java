@@ -45,19 +45,6 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "author")
     private List<Rating> ratings;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(getUsername(), user.getUsername())
-                && Objects.equals(getEmail(), user.getEmail());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getUsername(), getEmail());
-    }
 
     @Override
     public String toString() {
