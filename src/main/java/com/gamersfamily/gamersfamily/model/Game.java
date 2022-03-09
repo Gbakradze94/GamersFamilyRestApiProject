@@ -2,18 +2,22 @@ package com.gamersfamily.gamersfamily.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-@Data
+//@Data
+@Getter
+@Setter
 @Entity
 @Table(
         name = "games",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
 )
-@EqualsAndHashCode(callSuper = true)
+//@EqualsAndHashCode(callSuper = true)
 public class Game extends BaseEntity{
 
     @Column(name = "name", nullable = false, length = 50)
@@ -34,7 +38,7 @@ public class Game extends BaseEntity{
             joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "platform")
-<<<<<<< HEAD
+
     private Set<Platform> type;
 
     @Override
@@ -59,7 +63,5 @@ public class Game extends BaseEntity{
                 ", description = " + getDescription() +
                 '}';
     }
-=======
-    private Set<Platform> platform;
->>>>>>> 1bfdce162dae8b607d262b3aa4981b8c0a84fd59
+
 }

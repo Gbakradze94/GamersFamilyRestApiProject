@@ -19,7 +19,7 @@ import java.util.Objects;
         name = "categories",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
 )
-@EqualsAndHashCode(callSuper = true)
+//@EqualsAndHashCode(callSuper = true)
 public class Category extends BaseEntity {
 
     @Column(name = "name", nullable = false, length = 50)

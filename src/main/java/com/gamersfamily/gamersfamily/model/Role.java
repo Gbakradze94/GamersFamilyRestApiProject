@@ -16,7 +16,7 @@ import java.util.Objects;
         name = "roles",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
 )
-@EqualsAndHashCode(callSuper = true)
+//@EqualsAndHashCode(callSuper = true)
 public class Role extends BaseEntity{
     @Column(name = "name", nullable = false, length = 60)
     private String name;
