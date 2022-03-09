@@ -16,7 +16,7 @@ public class Comment extends BaseEntity {
     private String body;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", nullable=false)
     private User author;
 
     @ManyToOne
