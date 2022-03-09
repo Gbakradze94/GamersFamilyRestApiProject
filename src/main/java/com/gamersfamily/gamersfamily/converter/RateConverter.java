@@ -1,6 +1,6 @@
 package com.gamersfamily.gamersfamily.converter;
 
-import com.gamersfamily.gamersfamily.model.Rate;
+import com.gamersfamily.gamersfamily.utils.enums.Rate;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
