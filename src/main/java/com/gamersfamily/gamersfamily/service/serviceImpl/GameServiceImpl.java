@@ -1,7 +1,8 @@
-package com.gamersfamily.gamersfamily.service;
+package com.gamersfamily.gamersfamily.service.serviceImpl;
 
 import com.gamersfamily.gamersfamily.dto.GameDto;
 import com.gamersfamily.gamersfamily.repository.GameRepository;
+import com.gamersfamily.gamersfamily.service.GameService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class GameServiceImpl implements GameService{
+public class GameServiceImpl implements GameService {
 
     private final GameRepository gameRepository;
     private final ModelMapper modelMapper;
