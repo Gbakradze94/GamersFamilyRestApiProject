@@ -1,8 +1,8 @@
 package com.gamersfamily.gamersfamily.model;
 
+
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +15,9 @@ import java.util.Set;
         @UniqueConstraint(columnNames = {"username"}),
         @UniqueConstraint(columnNames = {"email"})
 })
+
 public class User extends BaseEntity {
+
 
     @Column(name = "username", nullable = false, length = 50)
     private String username;

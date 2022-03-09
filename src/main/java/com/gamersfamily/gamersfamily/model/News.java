@@ -2,9 +2,11 @@ package com.gamersfamily.gamersfamily.model;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+
 
 @Getter
 @Setter
@@ -13,7 +15,9 @@ import java.util.Objects;
         name = "news",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
 )
+
 public class News extends BaseEntity {
+
     @Column(name = "name", nullable = false, length = 50)
     private String name;
     @Column(name = "body", nullable = false)
