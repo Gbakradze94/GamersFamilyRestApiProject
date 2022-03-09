@@ -28,21 +28,6 @@ public class Comment extends BaseEntity {
 
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Comment comment = (Comment) o;
-        return Objects.equals(getBody(), comment.getBody()) &&
-                Objects.equals(getAuthor(), comment.getAuthor()) &&
-                Objects.equals(getNews(), comment.getNews());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getBody(), getAuthor(), getNews());
-    }
-
-    @Override
     public String toString() {
         return "Comment{" +
                 "ID: " + getId() +

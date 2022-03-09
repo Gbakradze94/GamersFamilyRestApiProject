@@ -39,20 +39,6 @@ public class Game extends BaseEntity {
     private Set<Platform> type;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Game game = (Game) o;
-        return Objects.equals(getName(), game.getName()) &&
-                Objects.equals(getDescription(), game.getDescription());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getDescription());
-    }
-
-    @Override
     public String toString() {
         return "Game{" +
                 "ID: " + getId() +

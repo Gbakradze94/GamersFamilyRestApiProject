@@ -2,10 +2,9 @@ package com.gamersfamily.gamersfamily.controller;
 
 
 import com.gamersfamily.gamersfamily.dto.GameDto;
-
 import com.gamersfamily.gamersfamily.model.Game;
 import com.gamersfamily.gamersfamily.service.GameService;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ public class GameController {
 
     private final GameService gameService;
 
-    public GameController(GameService gameService){
+   public GameController(GameService gameService){
         this.gameService = gameService;
     }
 
@@ -39,6 +38,8 @@ public class GameController {
     public ResponseEntity<Game> saveGame(@RequestBody GameDto gameDto){
         return new ResponseEntity<>(gameService.saveGame(gameDto),HttpStatus.OK);
     }
+
+
 
 
 }
