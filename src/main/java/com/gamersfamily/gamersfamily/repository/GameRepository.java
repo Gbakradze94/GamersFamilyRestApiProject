@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+
 public interface GameRepository extends PagingAndSortingRepository<Game,Long> {
 
     List<Game> findAll();
