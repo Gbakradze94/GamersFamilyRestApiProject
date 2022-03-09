@@ -1,6 +1,7 @@
 package com.gamersfamily.gamersfamily.service.serviceImpl;
 
 import com.gamersfamily.gamersfamily.dto.GameDto;
+import com.gamersfamily.gamersfamily.model.Game;
 import com.gamersfamily.gamersfamily.repository.GameRepository;
 import com.gamersfamily.gamersfamily.service.GameService;
 import org.modelmapper.ModelMapper;
@@ -38,5 +39,10 @@ public class GameServiceImpl implements GameService {
                 .stream()
                 .map(game -> modelMapper.map(game,GameDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Game saveGame(GameDto gameDto) {
+        return gameRepository.save(modelMapper.map(gameDto,Game.class));
     }
 }
