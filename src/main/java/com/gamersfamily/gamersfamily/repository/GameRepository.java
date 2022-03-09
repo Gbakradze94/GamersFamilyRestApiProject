@@ -9,7 +9,5 @@ import java.util.List;
 
 
 public interface GameRepository extends PagingAndSortingRepository<Game,Long> {
-
     List<Game> findAll();
-
 }
