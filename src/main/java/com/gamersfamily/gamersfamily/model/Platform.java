@@ -1,5 +1,15 @@
 package com.gamersfamily.gamersfamily.model;
 
 public enum Platform {
-    TEST1,TEST2,TEST3,TEST4
+    TEST1("Xbox"),TEST2("PC"),TEST3("IDK"),TEST4("IDK2");
+
+    private final String platform;
+
+    Platform(String platform) {
+        this.platform = platform;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
 }

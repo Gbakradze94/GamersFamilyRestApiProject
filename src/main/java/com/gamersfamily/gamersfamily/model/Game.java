@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -33,5 +34,32 @@ public class Game extends BaseEntity{
             joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "platform")
+<<<<<<< HEAD
+    private Set<Platform> type;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return Objects.equals(getName(), game.getName()) &&
+                Objects.equals(getDescription(), game.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getDescription());
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "ID: " + getId() +
+                ", name = '" + getName() + '\'' +
+                ", description = " + getDescription() +
+                '}';
+    }
+=======
     private Set<Platform> platform;
+>>>>>>> 1bfdce162dae8b607d262b3aa4981b8c0a84fd59
 }
