@@ -2,6 +2,7 @@ package com.gamersfamily.gamersfamily.controller;
 
 
 import com.gamersfamily.gamersfamily.dto.GameDto;
+import com.gamersfamily.gamersfamily.service.GameService;
 import com.gamersfamily.gamersfamily.service.GameServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,13 +17,19 @@ import java.util.List;
 @RestController
 public class GameController {
 
-    @Autowired
-    private GameServiceImpl gameServiceImpl;
+
+    private final GameService gameService;
+
+    public GameController(GameService gameService){
+        this.gameService = gameService;
+    }
 
     @GetMapping("/games")
     public ResponseEntity<List<GameDto>> getGames(){
-        return new ResponseEntity<>(gameServiceImpl.getAllGames(), HttpStatus.OK);
+        return new ResponseEntity<>(gameService.getAllGames(), HttpStatus.OK);
     }
+
+
 
 
 }
