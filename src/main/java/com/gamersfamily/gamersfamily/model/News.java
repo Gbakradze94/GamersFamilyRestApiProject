@@ -15,7 +15,6 @@ import java.util.Objects;
         name = "news",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
 )
-
 public class News extends BaseEntity {
 
     @Column(name = "name", nullable = false, length = 50)

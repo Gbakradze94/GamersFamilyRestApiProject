@@ -1,7 +1,6 @@
 package com.gamersfamily.gamersfamily.model;
 
 
-import com.gamersfamily.gamersfamily.converter.RateConverter;
 import lombok.Getter;
 import lombok.Setter;
 

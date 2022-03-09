@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity
 @Setter
 @Getter
-@Table(name="subComment")
+@Table(name = "subComment")
 public class SubComment extends BaseEntity {
     @Column(name = "subCommentBody", nullable = false)
     private String body;

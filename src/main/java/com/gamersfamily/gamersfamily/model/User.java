@@ -3,6 +3,7 @@ package com.gamersfamily.gamersfamily.model;
 
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +16,6 @@ import java.util.Set;
         @UniqueConstraint(columnNames = {"username"}),
         @UniqueConstraint(columnNames = {"email"})
 })
-
 public class User extends BaseEntity {
 
 
@@ -42,7 +42,7 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "author")
     private List<SubComment> subCommentList;
 
-    @OneToMany(mappedBy="author")
+    @OneToMany(mappedBy = "author")
     private List<Rating> ratings;
 
     @Override
@@ -56,7 +56,7 @@ public class User extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUsername(),getEmail());
+        return Objects.hash(getUsername(), getEmail());
     }
 
     @Override

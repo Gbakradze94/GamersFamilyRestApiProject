@@ -1,12 +1,13 @@
 package com.gamersfamily.gamersfamily.model;
 
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.util.Objects;
 
 @Getter
@@ -16,8 +17,7 @@ import java.util.Objects;
         name = "roles",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
 )
-//@EqualsAndHashCode(callSuper = true)
-public class Role extends BaseEntity{
+public class Role extends BaseEntity {
     @Column(name = "name", nullable = false, length = 60)
     private String name;
 
