@@ -1,5 +1,6 @@
 package com.gamersfamily.gamersfamily.model;
 
+import com.gamersfamily.gamersfamily.utils.enums.Platform;
 import lombok.Getter;
 import lombok.Setter;
 
