@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.time.LocalDateTime;
 
 @Entity
 @Setter
@@ -24,14 +24,19 @@ public class Rating extends BaseEntity {
     @JoinColumn(name = "news_id")
     private News news;
 
+    @Column(name="creationTime")
+    private LocalDateTime createdAt= LocalDateTime.now();
+    @Column(name="updateTime")
+    private LocalDateTime updated;
 
     @Override
     public String toString() {
         return "Rating{" +
-                "ID: " + getId() +
-                ", rate=" + getRate() +
-                ", author=" + getAuthor() +
-                ", news=" + getNews() +
+                "rate=" + rate +
+                ", author=" + author +
+                ", news=" + news +
+                ", createdAt=" + createdAt +
+                ", updated=" + updated +
                 '}';
     }
 }
