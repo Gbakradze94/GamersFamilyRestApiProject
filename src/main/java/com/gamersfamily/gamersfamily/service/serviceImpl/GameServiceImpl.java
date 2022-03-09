@@ -4,7 +4,10 @@ import com.gamersfamily.gamersfamily.dto.GameDto;
 import com.gamersfamily.gamersfamily.repository.GameRepository;
 import com.gamersfamily.gamersfamily.service.GameService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +32,11 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameDto> getGamesByPage(Integer pageNumber, Integer pageSize) {
-        return null;
+        Pageable pages = PageRequest.of(pageNumber,pageSize);
+        return gameRepository.findAll(pages)
+                .getContent()
+                .stream()
+                .map(game -> modelMapper.map(game,GameDto.class))
+                .collect(Collectors.toList());
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,6 +26,12 @@ public class GameController {
     @GetMapping("/games")
     public ResponseEntity<List<GameDto>> getGames(){
         return new ResponseEntity<>(gameService.getAllGames(), HttpStatus.OK);
+    }
+
+    @GetMapping("/gamesByPage")
+    public ResponseEntity<List<GameDto>> getGamesByPage(@RequestParam Integer pageNumber,
+                                                        @RequestParam Integer pageSize){
+        return new ResponseEntity<>(gameService.getGamesByPage(pageNumber,pageSize),HttpStatus.OK);
     }
 
 
