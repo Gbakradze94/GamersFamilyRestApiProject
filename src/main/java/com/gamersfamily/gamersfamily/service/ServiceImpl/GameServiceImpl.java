@@ -1,7 +1,8 @@
-package com.gamersfamily.gamersfamily.service;
+package com.gamersfamily.gamersfamily.service.ServiceImpl;
 
 import com.gamersfamily.gamersfamily.dto.GameDto;
 import com.gamersfamily.gamersfamily.repository.GameRepository;
+import com.gamersfamily.gamersfamily.service.GameService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class GameServiceImpl implements GameService{
+public class GameServiceImpl implements GameService {
 
     @Autowired
     private GameRepository gameRepository;

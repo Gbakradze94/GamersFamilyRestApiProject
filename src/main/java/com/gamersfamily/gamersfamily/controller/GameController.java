@@ -2,7 +2,7 @@ package com.gamersfamily.gamersfamily.controller;
 
 
 import com.gamersfamily.gamersfamily.dto.GameDto;
-import com.gamersfamily.gamersfamily.service.GameServiceImpl;
+import com.gamersfamily.gamersfamily.service.ServiceImpl.GameServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
