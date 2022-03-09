@@ -15,7 +15,6 @@ import java.util.Objects;
 public class Rating extends BaseEntity {
 
     @Column(name = "rate", nullable = false)
-    @Convert(converter = RateConverter.class)
     private Rate rate;
 
     @ManyToOne
