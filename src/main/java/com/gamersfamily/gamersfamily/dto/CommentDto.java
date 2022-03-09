@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentDto {
+    private long id;
     @NotBlank(message = "body must not be null or empty")
     private String body;
     @NotNull

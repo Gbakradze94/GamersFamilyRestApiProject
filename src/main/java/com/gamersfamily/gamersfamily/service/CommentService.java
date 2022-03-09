@@ -6,11 +6,11 @@ import com.gamersfamily.gamersfamily.model.Comment;
 import java.util.List;
 
 public interface CommentService {
-    Comment saveComment(CommentDto comment);
+    CommentDto saveComment(CommentDto comment);
 
-    List<Comment> getComments(long newsId);
+    List<CommentDto> getComments(long newsId);
 
-    Comment editComment(CommentDto comment);
+    CommentDto editComment(CommentDto comment);
 
-    Comment deleteComment(long commentId);
+    CommentDto deleteComment(long commentId);
 }
