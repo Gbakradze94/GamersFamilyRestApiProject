@@ -12,4 +12,8 @@ public interface GameService {
     List<GameDto> getGamesByPage(Integer pageNumber, Integer pageSize);
 
     Game saveGame(GameDto gameDto);
+
+    void deleteGame(Long id);
+
+    Game updateGame(GameDto gameDto);
 }
