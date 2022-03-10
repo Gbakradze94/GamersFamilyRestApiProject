@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 public class GameServiceImpl implements GameService {
 
-    private GameRepository gameRepository;
+    private final GameRepository gameRepository;
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public GameServiceImpl(GameRepository gameRepository, ModelMapper modelMapper){
         this.gameRepository = gameRepository;
