@@ -44,4 +44,15 @@ public class GameServiceImpl implements GameService {
     public Game saveGame(GameDto gameDto) {
         return gameRepository.save(modelMapper.map(gameDto,Game.class));
     }
+
+    @Override
+    public void deleteGame(Long id) {
+        gameRepository.deleteById(id);
+    }
+
+    @Override
+    public Game updateGame(GameDto gameDto) {
+        return gameRepository.save(modelMapper.map(gameDto,Game.class));
+    }
+
 }
