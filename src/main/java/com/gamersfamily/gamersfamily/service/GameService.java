@@ -5,6 +5,7 @@ import com.gamersfamily.gamersfamily.model.Game;
 
 import java.util.List;
 
+
 public interface GameService {
 
     List<GameDto> getAllGames();
