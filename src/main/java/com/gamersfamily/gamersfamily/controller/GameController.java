@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 public class GameController {
 
-/*
+
     private final GameService gameService;
 
    public GameController(GameService gameService){
@@ -54,6 +54,4 @@ public class GameController {
 
 
 
-
- */
 }
