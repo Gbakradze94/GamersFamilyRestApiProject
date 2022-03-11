@@ -43,7 +43,7 @@ public class Comment extends BaseEntity {
     @Column(name = "updateTime")
     private LocalDateTime updated;
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "comment",cascade = CascadeType.ALL,orphanRemoval=true)
     private List<SubComment> subCommentList;
 
 

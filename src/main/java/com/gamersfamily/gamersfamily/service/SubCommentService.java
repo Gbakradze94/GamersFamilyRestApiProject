@@ -1,17 +1,17 @@
 package com.gamersfamily.gamersfamily.service;
 
 import com.gamersfamily.gamersfamily.dto.SubCommentDto;
-import com.gamersfamily.gamersfamily.model.Comment;
+import com.gamersfamily.gamersfamily.dto.SubCommentDtoOutput;
 
 import java.util.List;
 
 public interface SubCommentService {
 
-    Comment saveComment(SubCommentDto subComment);
+    SubCommentDtoOutput saveSubComment(SubCommentDto subComment);
 
-    List<Comment> getComments(long commentId);
+    List<SubCommentDtoOutput> getSubComments(long CommentId);
 
-    Comment editComment(SubCommentDto subComment);
+    SubCommentDtoOutput editSubComment(SubCommentDtoOutput subComment);
 
-    Comment deleteComment(long commentId);
+    SubCommentDtoOutput deleteSubComment(long subCommentId, long authorId);
 }

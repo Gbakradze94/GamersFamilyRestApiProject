@@ -53,9 +53,10 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepo.findById(commentId).orElseThrow(() -> {
             throw new IllegalArgumentException("comment with this id can not be found to delete");
         });
-        if (comment.getAuthor().getId() == authorId) {
+        if (comment.getAuthor().getId()==authorId) {
             CommentDtoOutput output = commentMapper.entityToDto(comment);
-            commentRepo.delete(comment);
+            System.out.println("deleting the comment");
+            commentRepo.deleteById(commentId);
             return output;
         } else {
             throw new IllegalArgumentException("authorId does not belong to the id of the comment author");
