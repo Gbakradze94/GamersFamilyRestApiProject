@@ -82,17 +82,17 @@ public class CommentServiceTest {
         }
 
     @Test
-    public void abcde_deleteCommentTest(){
+    public void bab_deleteCommentTest(){
        CommentDtoOutput output=commentService.deleteComment(300,100);
         assertEquals(Long.valueOf(300L).toString(),output.getId().toString());
     }
     @Test(expected=IllegalArgumentException.class)
     public void b_deleteCommentTestWhenUserIsIllegal(){
-        CommentDtoOutput output=commentService.deleteComment(300,102);
+        commentService.deleteComment(300,102);
 
     }
     @Test(expected=IllegalArgumentException.class)
     public void ba_deleteCommentTestWhenCommentIdDoesNotExist(){
-        CommentDtoOutput output=commentService.deleteComment(200,100);
+        commentService.deleteComment(200,100);
     }
 }

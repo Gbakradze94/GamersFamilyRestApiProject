@@ -1,6 +1,7 @@
 package com.gamersfamily.gamersfamily.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SubCommentDto {
-    @NotBlank(message="body must not be null or empty")
+
+    @Builder
+    private static SubCommentDto of(String body, long userId, long commentId, LocalDateTime createdAt) {
+        SubCommentDto subCommentDto = new SubCommentDto();
+        subCommentDto.body = body;
+        subCommentDto.userId = userId;
+        subCommentDto.commentId = commentId;
+        subCommentDto.createdAt = createdAt;
+        return subCommentDto;
+    }
+
+    @NotBlank(message = "body must not be null or empty")
     private String body;
     @NotNull
     private long userId;
