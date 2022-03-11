@@ -8,10 +8,11 @@ import com.gamersfamily.gamersfamily.service.GameService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class GameServiceImpl implements GameService {
 
     private GameRepository gameRepository;

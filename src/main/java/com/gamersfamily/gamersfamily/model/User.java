@@ -1,12 +1,13 @@
 package com.gamersfamily.gamersfamily.model;
 
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -18,6 +19,15 @@ import java.util.Set;
 })
 public class User extends BaseEntity {
 
+    @Builder
+    private static User  of(long id, String username, String email, String password) {
+        User user = new User();
+        user.setId(id);
+        user.username = username;
+        user.email = email;
+        user.password = password;
+        return user;
+    }
 
     @Column(name = "username", nullable = false, length = 50)
     private String username;

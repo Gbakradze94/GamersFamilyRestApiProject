@@ -1,6 +1,7 @@
 package com.gamersfamily.gamersfamily.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentDto {
-    private long id;
+
+    @Builder
+    private static CommentDto of( String body, long userId, long newsId, LocalDateTime createdAt) {
+        CommentDto dto = new CommentDto();
+        dto.body = body;
+        dto.userId = userId;
+        dto.newsId = newsId;
+        dto.createdAt = createdAt;
+      return dto;
+    }
+
     @NotBlank(message = "body must not be null or empty")
     private String body;
     @NotNull

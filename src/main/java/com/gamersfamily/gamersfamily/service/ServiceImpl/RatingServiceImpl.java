@@ -3,7 +3,9 @@ package com.gamersfamily.gamersfamily.service.serviceimpl;
 import com.gamersfamily.gamersfamily.dto.RatingDto;
 import com.gamersfamily.gamersfamily.model.Rating;
 import com.gamersfamily.gamersfamily.service.RatingService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RatingServiceImpl implements RatingService {
     @Override
     public Rating saveRating(RatingDto rating) {

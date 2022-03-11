@@ -1,6 +1,6 @@
 package com.gamersfamily.gamersfamily.dto;
 
-import com.gamersfamily.gamersfamily.model.Rate;
+import com.gamersfamily.gamersfamily.utils.enums.Rate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

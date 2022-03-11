@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
@@ -18,6 +19,7 @@ import java.io.Serializable;
 public abstract class BaseEntity implements PersistentObj, Serializable {
 
     @Id
+    @Column(name="id",unique = true,nullable = false)
     private Long id = IdGenerator.createId();
 
     @Version
