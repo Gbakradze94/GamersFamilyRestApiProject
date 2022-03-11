@@ -25,10 +25,6 @@ public class Rating extends BaseEntity {
     @JoinColumn(name = "news_id")
     private News news;
 
-    @Column(name="creationTime")
-    private LocalDateTime createdAt= LocalDateTime.now();
-    @Column(name="updateTime")
-    private LocalDateTime updated;
 
     @Override
     public String toString() {
@@ -36,8 +32,6 @@ public class Rating extends BaseEntity {
                 "rate=" + rate +
                 ", author=" + author +
                 ", news=" + news +
-                ", createdAt=" + createdAt +
-                ", updated=" + updated +
                 '}';
     }
 }

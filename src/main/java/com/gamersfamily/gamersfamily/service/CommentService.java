@@ -1,16 +1,17 @@
 package com.gamersfamily.gamersfamily.service;
 
 import com.gamersfamily.gamersfamily.dto.CommentDto;
+import com.gamersfamily.gamersfamily.dto.CommentDtoOutput;
 import com.gamersfamily.gamersfamily.model.Comment;
 
 import java.util.List;
 
 public interface CommentService {
-    Comment saveComment(CommentDto comment);
+    CommentDtoOutput saveComment(CommentDto comment);
 
-    List<Comment> getComments(long newsId);
+    List<CommentDtoOutput> getComments(long newsId);
 
-    Comment editComment(CommentDto comment);
+    CommentDtoOutput editComment(CommentDtoOutput comment);
 
-    Comment deleteComment(long commentId);
+    CommentDtoOutput deleteComment(long commentId, long authorId);
 }

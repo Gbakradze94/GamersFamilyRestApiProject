@@ -3,9 +3,10 @@ package com.gamersfamily.gamersfamily.service.serviceimpl;
 import com.gamersfamily.gamersfamily.dto.SubCommentDto;
 import com.gamersfamily.gamersfamily.model.Comment;
 import com.gamersfamily.gamersfamily.service.SubCommentService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class SubCommentImpl implements SubCommentService {
     @Override
     public Comment saveComment(SubCommentDto subComment) {
