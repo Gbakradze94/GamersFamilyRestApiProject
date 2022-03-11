@@ -5,6 +5,7 @@ import com.gamersfamily.gamersfamily.model.Game;
 
 import java.util.List;
 
+
 public interface GameService {
 
     List<GameDto> getAllGames();
@@ -12,4 +13,8 @@ public interface GameService {
     List<GameDto> getGamesByPage(Integer pageNumber, Integer pageSize);
 
     Game saveGame(GameDto gameDto);
+
+    void deleteGame(Long id);
+
+    Game updateGame(GameDto gameDto);
 }

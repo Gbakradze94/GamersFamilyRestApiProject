@@ -35,7 +35,7 @@ public class User extends BaseEntity {
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "password", nullable = false, length = 200)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

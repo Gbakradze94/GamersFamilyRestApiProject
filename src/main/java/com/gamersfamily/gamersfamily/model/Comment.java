@@ -14,6 +14,7 @@ import java.util.List;
 @Table(name = "comment")
 public class Comment extends BaseEntity {
 
+
     @Builder
     private static Comment of(long id, String body, User author, News news , LocalDateTime createdAt) {
         Comment comment = new Comment();
@@ -25,7 +26,9 @@ public class Comment extends BaseEntity {
         return comment;
     }
 
-    @Column(name = "commentBody", nullable = false)
+
+    @Lob
+    @Column(name = "commentBody", columnDefinition = "CLOB", nullable = false)
     private String body;
 
     @ManyToOne

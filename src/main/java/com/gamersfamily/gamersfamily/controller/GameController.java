@@ -10,13 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin("*")
 @RestController
 public class GameController {
 
-/*
     private final GameService gameService;
 
    public GameController(GameService gameService){
@@ -36,13 +36,22 @@ public class GameController {
 
 
     @PostMapping("/games")
-    public ResponseEntity<Game> saveGame(@RequestBody GameDto gameDto){
+    public ResponseEntity<Game> saveGame(@RequestBody @Valid GameDto gameDto){
         return new ResponseEntity<>(gameService.saveGame(gameDto),HttpStatus.OK);
+    }
+
+    @PutMapping("/games/{id}")
+    public ResponseEntity<Game> updateGame(@PathVariable Long id, @RequestBody GameDto gameDto){
+        gameDto.setId(id);
+        return new ResponseEntity<>(gameService.updateGame(gameDto),HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/games")
+    public ResponseEntity<HttpStatus> deleteGames(@RequestParam("id") Long id){
+        gameService.deleteGame(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
 
-
-
- */
 }

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,12 +36,14 @@ public class NewsController {
         return ResponseEntity.ok(newsService.getNewsById(newsId));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
     @PostMapping()
     public ResponseEntity<NewsDto> createNews(@Valid @RequestBody NewsDto newsDto){
         logger.info("Creating News");
         return new ResponseEntity<>(newsService.createNews(newsDto), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
     @PutMapping("/{newsId}")
     public ResponseEntity<NewsDto> updateNews(
             @PathVariable(value = "newsId") Long newsId,
@@ -50,6 +53,7 @@ public class NewsController {
         return new ResponseEntity<>(updatedNews, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
     @DeleteMapping("/{newsId}")
     public ResponseEntity<String> deleteNews(
             @PathVariable(value = "newsId") Long newsId

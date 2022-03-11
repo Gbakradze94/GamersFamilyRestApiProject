@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,9 +20,11 @@ import java.util.Set;
 public class Game extends BaseEntity {
 
     @Column(name = "name", nullable = false, length = 50)
+    @NotEmpty(message = "Name of the game cannot be empty")
     private String name;
 
-    @Column(name = "description")
+    @Lob
+    @Column(name = "description", columnDefinition = "CLOB")
     private String description;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

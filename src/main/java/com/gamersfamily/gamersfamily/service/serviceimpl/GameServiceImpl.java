@@ -12,12 +12,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 public class GameServiceImpl implements GameService {
 
-    private GameRepository gameRepository;
+    private final GameRepository gameRepository;
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public GameServiceImpl(GameRepository gameRepository, ModelMapper modelMapper){
         this.gameRepository = gameRepository;
@@ -45,4 +46,15 @@ public class GameServiceImpl implements GameService {
     public Game saveGame(GameDto gameDto) {
         return gameRepository.save(modelMapper.map(gameDto,Game.class));
     }
+
+    @Override
+    public void deleteGame(Long id) {
+        gameRepository.deleteById(id);
+    }
+
+    @Override
+    public Game updateGame(GameDto gameDto) {
+        return gameRepository.save(modelMapper.map(gameDto,Game.class));
+    }
+
 }
