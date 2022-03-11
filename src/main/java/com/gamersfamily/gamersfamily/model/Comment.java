@@ -12,7 +12,9 @@ import java.util.List;
 @Getter
 @Table(name="comment")
 public class Comment extends BaseEntity {
-    @Column(name = "commentBody", nullable = false)
+
+    @Lob
+    @Column(name = "commentBody", columnDefinition = "CLOB", nullable = false)
     private String body;
 
     @ManyToOne

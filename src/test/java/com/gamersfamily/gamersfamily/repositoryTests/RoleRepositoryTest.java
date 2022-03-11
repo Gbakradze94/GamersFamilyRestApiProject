@@ -3,6 +3,7 @@ package com.gamersfamily.gamersfamily.repositoryTests;
 import com.gamersfamily.gamersfamily.dto.RoleDto;
 import com.gamersfamily.gamersfamily.service.RoleService;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,9 +16,14 @@ import java.util.List;
 @Rollback(false)
 class RoleRepositoryTest {
 
-    private final RoleService roleService;
+    private RoleService roleService;
 
-    RoleRepositoryTest(RoleService roleService) {
+//    RoleRepositoryTest(RoleService roleService) {
+//        this.roleService = roleService;
+//    }
+
+    @BeforeEach
+    void setUp(RoleService roleService){
         this.roleService = roleService;
     }
 

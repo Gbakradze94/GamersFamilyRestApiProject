@@ -23,8 +23,8 @@ public class Game extends BaseEntity {
     @NotEmpty(message = "Name of the game cannot be empty")
     private String name;
 
-    @Column(name = "description")
-
+    @Lob
+    @Column(name = "description", columnDefinition = "CLOB")
     private String description;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name = "subComment")
 public class SubComment extends BaseEntity {
-    @Column(name = "subCommentBody", nullable = false)
+
+    @Lob
+    @Column(name = "subCommentBody", columnDefinition = "CLOB", nullable = false)
     private String body;
 
     @ManyToOne
