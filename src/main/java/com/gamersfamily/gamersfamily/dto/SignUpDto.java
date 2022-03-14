@@ -21,7 +21,6 @@ public class SignUpDto {
     private String email;
 
 
-    @Pattern(regexp ="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",message ="password should contain at least one digit, one upper case character, one lowercase character, one special symbol (@$!%*?&) and  should be at least 8 characters long" )
-    @Size(min = 3, message = "Password Should be at least 3 chars")
+    @Pattern(regexp ="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",message ="password should contain at least one digit, one upper case character, one lowercase character, one special symbol (@$!%*?&) and  should be at least 8 characters long")
     private String password;
 }
