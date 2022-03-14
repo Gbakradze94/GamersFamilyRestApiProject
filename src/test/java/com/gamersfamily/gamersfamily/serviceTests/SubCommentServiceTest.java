@@ -42,7 +42,7 @@ public class SubCommentServiceTest {
     public void a_getSubCommentsTest() {
         List<SubCommentDtoOutput> outputList = subCommentService.getSubComments(300);
         SubCommentDtoOutput output = outputList.get(0);
-        Assert.assertEquals(Long.valueOf(400).toString(), output.getId().toString());
+        Assert.assertEquals(400, output.getId());
         Assert.assertEquals("my subcomment to this comment", output.getBody());
         Assert.assertEquals("anna", output.getUsername());
 
@@ -60,14 +60,14 @@ public class SubCommentServiceTest {
         System.out.println(output);
         assertEquals("i want to modify my subComment", output.getBody());
         assertEquals("anna", output.getUsername());
-        assertEquals(Long.valueOf(400).toString(), output.getId().toString());
+        assertEquals(400, output.getId());
 
     }
 
     @Test
     public void dab_deleteSubCommentTest() {
         SubCommentDtoOutput output = subCommentService.deleteSubComment(400, 100);
-        assertEquals(Long.valueOf(400L).toString(), output.getId().toString());
+        assertEquals(400, output.getId());
     }
 
     @Test(expected = IllegalArgumentException.class)

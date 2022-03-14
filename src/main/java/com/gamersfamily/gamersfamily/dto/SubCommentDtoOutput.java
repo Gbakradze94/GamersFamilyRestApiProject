@@ -12,6 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class SubCommentDtoOutput extends SubCommentDto{
     private String username;
-    private Long id;
+    private long id;
     private LocalDateTime updated;
 }

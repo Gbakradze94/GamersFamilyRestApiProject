@@ -49,13 +49,13 @@ public class CommentServiceTest {
         System.out.println(commentDto);
         assertEquals("anna", commentDto.getUsername());
         assertEquals("first comment to this news", commentDto.getBody());
-        assertEquals(Long.valueOf(300).toString(), commentDto.getId().toString());
+        assertEquals(300, commentDto.getId());
 
     }
 
     @Test
     public void abc_editCommentTest() {
-        CommentDtoOutput commentDtoOutput =new CommentDtoOutput("anna",300l, LocalDateTime.now());
+        CommentDtoOutput commentDtoOutput = new CommentDtoOutput("anna", 300l, LocalDateTime.now());
         commentDtoOutput.setCreatedAt(LocalDateTime.parse("2022-02-06T20:00:59.032804", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         commentDtoOutput.setBody("comment is edited");
         commentDtoOutput.setUserId(100);
@@ -65,34 +65,37 @@ public class CommentServiceTest {
         System.out.println(output);
         assertEquals("comment is edited", output.getBody());
         assertEquals("anna", output.getUsername());
-        assertEquals(Long.valueOf(300).toString(), output.getId().toString());
+        assertEquals(300, output.getId());
 
 
     }
-    @Test(expected =IllegalArgumentException.class)
-    public void abcd_editCommentWhenCommentDoesNotBelongToUser(){
-        CommentDtoOutput commentDtoOutput=new CommentDtoOutput("anna",300l,LocalDateTime.now());
-        commentDtoOutput.setCreatedAt(LocalDateTime.parse("2022-02-06T20:00:59.032804",DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+
+    @Test(expected = IllegalArgumentException.class)
+    public void abcd_editCommentWhenCommentDoesNotBelongToUser() {
+        CommentDtoOutput commentDtoOutput = new CommentDtoOutput("anna", 300l, LocalDateTime.now());
+        commentDtoOutput.setCreatedAt(LocalDateTime.parse("2022-02-06T20:00:59.032804", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         commentDtoOutput.setBody("comment is edited");
         commentDtoOutput.setUserId(150);
         commentDtoOutput.setNewsId(200);
 
-        CommentDtoOutput output=commentService.editComment(commentDtoOutput);
+        CommentDtoOutput output = commentService.editComment(commentDtoOutput);
 
-        }
+    }
 
     @Test
-    public void bab_deleteCommentTest(){
-       CommentDtoOutput output=commentService.deleteComment(300,100);
-        assertEquals(Long.valueOf(300L).toString(),output.getId().toString());
+    public void bab_deleteCommentTest() {
+        CommentDtoOutput output = commentService.deleteComment(300, 100);
+        assertEquals(300, output.getId());
     }
-    @Test(expected=IllegalArgumentException.class)
-    public void b_deleteCommentTestWhenUserIsIllegal(){
-        commentService.deleteComment(300,102);
+
+    @Test(expected = IllegalArgumentException.class)
+    public void b_deleteCommentTestWhenUserIsIllegal() {
+        commentService.deleteComment(300, 102);
 
     }
-    @Test(expected=IllegalArgumentException.class)
-    public void ba_deleteCommentTestWhenCommentIdDoesNotExist(){
-        commentService.deleteComment(200,100);
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ba_deleteCommentTestWhenCommentIdDoesNotExist() {
+        commentService.deleteComment(200, 100);
     }
 }
