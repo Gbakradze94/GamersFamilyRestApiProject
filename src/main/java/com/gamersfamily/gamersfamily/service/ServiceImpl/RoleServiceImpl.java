@@ -1,4 +1,4 @@
-package com.gamersfamily.gamersfamily.service.ServiceImpl;
+package com.gamersfamily.gamersfamily.service.serviceimpl;
 
 import com.gamersfamily.gamersfamily.dto.RoleDto;
 import com.gamersfamily.gamersfamily.exception.ResourceNotFoundException;
