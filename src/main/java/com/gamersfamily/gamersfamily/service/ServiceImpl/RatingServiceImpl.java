@@ -8,10 +8,11 @@ import com.gamersfamily.gamersfamily.model.User;
 import com.gamersfamily.gamersfamily.repository.RatingRepository;
 import com.gamersfamily.gamersfamily.repository.UserRepository;
 import com.gamersfamily.gamersfamily.service.RatingService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Slf4j
 @Service
 public class RatingServiceImpl implements RatingService {
 
@@ -32,7 +33,7 @@ public class RatingServiceImpl implements RatingService {
                     throw new IllegalArgumentException("no user with given id found");
                 });
         Rating ratingResult = user.getRatings().stream()
-                .filter(src -> src.getNews().getId().equals(rating.getUserId()))
+                .filter(src -> src.getNews().getId().equals(rating.getNewsId()))
                 .findFirst()
                 .orElseGet(() -> ratingRepository.save(ratingMapper.dtoToEntity(rating)));
         return ratingMapper.entityToDto(ratingResult);

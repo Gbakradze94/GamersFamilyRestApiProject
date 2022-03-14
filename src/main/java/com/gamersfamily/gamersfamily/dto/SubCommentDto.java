@@ -1,17 +1,17 @@
 package com.gamersfamily.gamersfamily.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Data
+@ToString(callSuper = true)
 @NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
+@EqualsAndHashCode()
 public class SubCommentDto {
 
     @Builder
