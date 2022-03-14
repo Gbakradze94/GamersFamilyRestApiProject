@@ -20,7 +20,7 @@ public class NewsRepositoryTest {
    @Test
     public void findByIdTest(){
         News news= newsRepository.findById(200).orElseThrow(()-> {throw new IllegalArgumentException();});
-        assertEquals(Long.valueOf(200).toString(),news.getId().toString());
+        assertEquals(200,news.getId());
         assertEquals("this is news",news.getBody().toString());
 
 

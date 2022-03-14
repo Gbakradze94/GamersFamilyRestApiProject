@@ -33,7 +33,7 @@ public class RatingServiceImpl implements RatingService {
                     throw new IllegalArgumentException("no user with given id found");
                 });
         Rating ratingResult = user.getRatings().stream()
-                .filter(src -> src.getNews().getId().equals(rating.getNewsId()))
+                .filter(src -> src.getNews().getId()==rating.getNewsId())
                 .findFirst()
                 .orElseGet(() -> ratingRepository.save(ratingMapper.dtoToEntity(rating)));
         return ratingMapper.entityToDto(ratingResult);

@@ -31,26 +31,22 @@ public class CommentRepositoryTest {
     public void saveTest() {
         LocalDateTime localDateTime = LocalDateTime.now();
         User user = User.builder()
-                .id(34)
                 .email("email@mail.ru")
                 .username("robert23")
                 .password("password")
                 .build();
         userRepository.save(user);
         News news = News.builder()
-                .id(4)
                 .body("bodyy")
                 .name("newsName")
                 .build();
         newsRepository.save(news);
         Comment comment = Comment.builder()
-                .id(33)
                 .body("mycomment")
                 .author(user)
                 .news(news)
                 .createdAt(localDateTime).build();
         Comment commentSaved = commentRepository.save(comment);
-        Assert.assertEquals(Long.valueOf(33).toString(), commentSaved.getId().toString());
         Assert.assertEquals(user, commentSaved.getAuthor());
         Assert.assertEquals(news, commentSaved.getNews());
         System.out.println(commentSaved);
@@ -64,8 +60,8 @@ public class CommentRepositoryTest {
     public void findAllTest() {
         List<Comment> commentsList = commentRepository.findByNewsId(200);
         Comment comment = commentsList.get(0);
-        Assert.assertEquals(Long.valueOf(200).toString(), comment.getNews().getId().toString());
-        Assert.assertEquals(Long.valueOf(100).toString(), comment.getAuthor().getId().toString());
+        Assert.assertEquals(200, comment.getNews().getId());
+        Assert.assertEquals(100, comment.getAuthor().getId());
         Assert.assertEquals("first comment to this news", comment.getBody());
 
     }

@@ -21,7 +21,7 @@ public class UserRepositoryTest {
         User user = repository.findById(100).orElseThrow(() -> {
             throw new IllegalArgumentException();
         });
-        Assertions.assertEquals(Long.valueOf(100).toString(), user.getId().toString());
+        Assertions.assertEquals(100, user.getId());
         Assertions.assertEquals("email@gmail.ru", user.getEmail());
     }
 

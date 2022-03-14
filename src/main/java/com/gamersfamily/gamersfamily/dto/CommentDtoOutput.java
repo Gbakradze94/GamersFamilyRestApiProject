@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class CommentDtoOutput extends CommentDto {
 
     private String username;
-    private Long id;
+    private long id;
     private LocalDateTime updated;
 
 }
