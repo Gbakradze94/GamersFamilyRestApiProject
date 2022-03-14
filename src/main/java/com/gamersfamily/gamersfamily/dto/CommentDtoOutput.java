@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 
 
 @ToString(callSuper = true)
+@NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class CommentDtoOutput extends CommentDto {
 
     private String username;
