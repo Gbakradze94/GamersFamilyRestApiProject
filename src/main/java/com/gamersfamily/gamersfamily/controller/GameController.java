@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/games")
 public class GameController {
 
     private final GameService gameService;
@@ -24,7 +24,7 @@ public class GameController {
     }
 
     @ApiOperation(value = "Gets all games from database.")
-    @GetMapping("/games")
+    @GetMapping
     public ResponseEntity<List<GameDto>> getGames() {
         return new ResponseEntity<>(gameService.getAllGames(), HttpStatus.OK);
     }
@@ -37,20 +37,20 @@ public class GameController {
     }
 
     @ApiOperation(value = "Creates new game.")
-    @PostMapping("/games")
+    @PostMapping
     public ResponseEntity<Game> saveGame(@RequestBody @Valid GameDto gameDto) {
         return new ResponseEntity<>(gameService.saveGame(gameDto), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Updates game.")
-    @PutMapping("/games/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Game> updateGame(@PathVariable Long id, @RequestBody GameDto gameDto) {
         gameDto.setId(id);
         return new ResponseEntity<>(gameService.updateGame(gameDto), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Deletes game.")
-    @DeleteMapping("/games")
+    @DeleteMapping()
     public ResponseEntity<HttpStatus> deleteGames(@RequestParam("id") Long id) {
         gameService.deleteGame(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
