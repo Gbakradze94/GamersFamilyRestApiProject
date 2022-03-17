@@ -3,6 +3,7 @@ package com.gamersfamily.gamersfamily.serviceTests;
 
 import com.gamersfamily.gamersfamily.dto.CommentDto;
 import com.gamersfamily.gamersfamily.dto.CommentDtoOutput;
+import com.gamersfamily.gamersfamily.exception.BlogAPIException;
 import com.gamersfamily.gamersfamily.service.CommentService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -10,7 +11,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
+
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,6 +33,7 @@ public class CommentServiceTest {
 
 
     @Test
+    @WithMockUser(username = "email@gmail.ru")
     public void ab_testSaveComment() {
         LocalDateTime localDateTime = LocalDateTime.now();
         CommentDto dto = CommentDto
@@ -43,6 +47,7 @@ public class CommentServiceTest {
     }
 
     @Test
+    @WithMockUser(username = "email@gmail.ru")
     public void a_getCommentsTest() {
         List<CommentDtoOutput> commentDtoList = commentService.getComments(200);
         CommentDtoOutput commentDto = commentDtoList.get(0);
@@ -54,6 +59,7 @@ public class CommentServiceTest {
     }
 
     @Test
+    @WithMockUser(username = "email@gmail.ru")
     public void abc_editCommentTest() {
         CommentDtoOutput commentDtoOutput = new CommentDtoOutput("anna", 300l, LocalDateTime.now());
         commentDtoOutput.setCreatedAt(LocalDateTime.parse("2022-02-06T20:00:59.032804", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
@@ -70,12 +76,13 @@ public class CommentServiceTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = BlogAPIException.class)
+    @WithMockUser(username = "mishamisha@gmail.ru")
     public void abcd_editCommentWhenCommentDoesNotBelongToUser() {
         CommentDtoOutput commentDtoOutput = new CommentDtoOutput("anna", 300l, LocalDateTime.now());
         commentDtoOutput.setCreatedAt(LocalDateTime.parse("2022-02-06T20:00:59.032804", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         commentDtoOutput.setBody("comment is edited");
-        commentDtoOutput.setUserId(150);
+        commentDtoOutput.setUserId(101);
         commentDtoOutput.setNewsId(200);
 
         CommentDtoOutput output = commentService.editComment(commentDtoOutput);
@@ -83,18 +90,21 @@ public class CommentServiceTest {
     }
 
     @Test
+    @WithMockUser(username = "email@gmail.ru")
     public void bab_deleteCommentTest() {
         CommentDtoOutput output = commentService.deleteComment(300, 100);
         assertEquals(300, output.getId());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = BlogAPIException.class)
+    @WithMockUser(username = "mishamisha@gmail.ru")
     public void b_deleteCommentTestWhenUserIsIllegal() {
         commentService.deleteComment(300, 102);
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected =BlogAPIException.class)
+    @WithMockUser(username = "email@gmail.ru")
     public void ba_deleteCommentTestWhenCommentIdDoesNotExist() {
         commentService.deleteComment(200, 100);
     }
