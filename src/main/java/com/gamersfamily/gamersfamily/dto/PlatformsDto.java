@@ -2,8 +2,6 @@ package com.gamersfamily.gamersfamily.dto;
 
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor

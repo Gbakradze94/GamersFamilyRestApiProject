@@ -3,7 +3,7 @@ package com.gamersfamily.gamersfamily.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -13,7 +13,6 @@ public class GameFetchDto {
     private String name;
     private String description;
     private String background_image;
-    private String released;
-    private Double rating;
+    private Date released;
     private Set<PlatformsDto> platforms;
 }
