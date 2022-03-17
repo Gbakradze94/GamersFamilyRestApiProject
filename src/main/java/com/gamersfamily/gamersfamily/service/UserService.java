@@ -8,4 +8,5 @@ import org.springframework.http.ResponseEntity;
 public interface UserService {
     ResponseEntity<?> registerUser(SignUpDto signUpDto);
     ResponseEntity<JWTAuthResponse> signInUser(LoginDto loginDto);
+    boolean verify(String verificationCode);
 }

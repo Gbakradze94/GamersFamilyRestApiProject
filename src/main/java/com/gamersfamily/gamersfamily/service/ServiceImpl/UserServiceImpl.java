@@ -1,4 +1,4 @@
-package com.gamersfamily.gamersfamily.service.ServiceImpl;
+package com.gamersfamily.gamersfamily.service.serviceimpl;
 
 import com.gamersfamily.gamersfamily.dto.JWTAuthResponse;
 import com.gamersfamily.gamersfamily.dto.LoginDto;
@@ -72,5 +72,16 @@ public class UserServiceImpl implements UserService {
 
         String token = tokenProvider.generateToken(authentication);
         return ResponseEntity.ok(new JWTAuthResponse(token));
+    }
+
+    public boolean verify(String verificationCode) {
+        User user = userRepository.findByVerificationCode(verificationCode);
+
+        if (user == null || user.isEnabled()) {
+            return false;
+        } else {
+            userRepository.enable(user.getId());
+            return true;
+        }
     }
 }

@@ -20,12 +20,15 @@ import java.util.Set;
 public class User extends BaseEntity {
 
     @Builder
-    private static User  of(long id, String username, String email, String password) {
+    private static User  of(long id, String username, String email, String password,boolean isEnabled,
+                            String verificationCode) {
         User user = new User();
         user.setId(id);
         user.username = username;
         user.email = email;
         user.password = password;
+        user.isEnabled = isEnabled;
+        user.verificationCode = verificationCode;
         return user;
     }
 
@@ -37,6 +40,11 @@ public class User extends BaseEntity {
 
     @Column(name = "password", nullable = false, length = 200)
     private String password;
+
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
+    private boolean isEnabled;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",

@@ -7,9 +7,12 @@ import com.gamersfamily.gamersfamily.model.SubComment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.beans.Transient;
 import java.util.List;
 import java.util.Set;
 
@@ -31,6 +34,10 @@ public class UserDto {
     @Size(min=3, message = "Password Should be at least 3 chars")
     private String password;
 
+    private String verificationCode;
+
+    private boolean isEnabled;
+
     private Set<Role> roles;
 
     private List<Comment> comment;
@@ -38,4 +45,5 @@ public class UserDto {
     private List<SubComment> subCommentList;
 
     private List<Rating> ratings;
+
 }
