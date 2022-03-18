@@ -28,8 +28,8 @@ public class News extends BaseEntity {
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
-    @Lob
-    @Column(name = "body", columnDefinition = "CLOB", nullable = false)
+    //@Lob
+    @Column(name = "body", nullable = false)
     private String body;
     @OneToMany(mappedBy = "news")
     private List<Comment> comments;
