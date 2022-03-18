@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class SubComment extends BaseEntity {
 
     @Lob
-    @Column(name = "subCommentBody", columnDefinition = "CLOB", nullable = false)
+    @Column(name = "subCommentBody",  nullable = false)
     private String body;
 
     @ManyToOne

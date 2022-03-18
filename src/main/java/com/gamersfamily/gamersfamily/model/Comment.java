@@ -27,8 +27,8 @@ public class Comment extends BaseEntity {
     }
 
 
-    @Lob
-    @Column(name = "commentBody", columnDefinition = "CLOB", nullable = false)
+   @Lob
+    @Column(name = "commentBody", nullable = false)
     private String body;
 
     @ManyToOne
