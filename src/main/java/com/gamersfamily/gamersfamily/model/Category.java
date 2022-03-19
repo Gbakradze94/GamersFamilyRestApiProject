@@ -18,7 +18,7 @@ import javax.persistence.UniqueConstraint;
 )
 public class Category extends BaseEntity {
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
 

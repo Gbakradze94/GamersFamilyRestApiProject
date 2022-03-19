@@ -14,8 +14,10 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v1/games")
+@RequestMapping(GameController.BASE_URL)
 public class GameController {
+
+    public static final String BASE_URL = "/api/v1/games";
 
     private final GameService gameService;
 

@@ -4,6 +4,7 @@ import com.gamersfamily.gamersfamily.dto.GameDto;
 import com.gamersfamily.gamersfamily.model.Game;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface GameService {
@@ -17,4 +18,6 @@ public interface GameService {
     void deleteGame(Long id);
 
     Game updateGame(GameDto gameDto);
+
+    Optional<Game> findByName(String name);
 }

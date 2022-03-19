@@ -1,34 +1,43 @@
 package com.gamersfamily.gamersfamily.service.serviceimpl;
 
 
+import com.gamersfamily.gamersfamily.dto.CategoryFetchDto;
 import com.gamersfamily.gamersfamily.dto.GameDto;
+import com.gamersfamily.gamersfamily.mapper.GameMapper;
+import com.gamersfamily.gamersfamily.model.Category;
 import com.gamersfamily.gamersfamily.model.Game;
+import com.gamersfamily.gamersfamily.model.Role;
+import com.gamersfamily.gamersfamily.repository.CategoryRepository;
 import com.gamersfamily.gamersfamily.repository.GameRepository;
 import com.gamersfamily.gamersfamily.service.GameService;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class GameServiceImpl implements GameService {
 
     private final GameRepository gameRepository;
+    private final CategoryRepository categoryRepository;
 
-    private final ModelMapper modelMapper;
+    private final GameMapper gameMapper;
 
-    public GameServiceImpl(GameRepository gameRepository, ModelMapper modelMapper){
+    public GameServiceImpl(GameRepository gameRepository, CategoryRepository categoryRepository, GameMapper gameMapper){
         this.gameRepository = gameRepository;
-        this.modelMapper = modelMapper;
+        this.categoryRepository = categoryRepository;
+        this.gameMapper = gameMapper;
     }
 
     @Override
     public List<GameDto> getAllGames() {
         return gameRepository.findAll()
-                .stream().map(game -> modelMapper.map(game,GameDto.class))
+                .stream().map(gameMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
@@ -38,13 +47,14 @@ public class GameServiceImpl implements GameService {
         return gameRepository.findAll(pages)
                 .getContent()
                 .stream()
-                .map(game -> modelMapper.map(game,GameDto.class))
+                .map(gameMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Game saveGame(GameDto gameDto) {
-        return gameRepository.save(modelMapper.map(gameDto,Game.class));
+        checkCategory(gameDto);
+        return gameRepository.save(gameMapper.dtoToEntity(gameDto));
     }
 
     @Override
@@ -54,7 +64,24 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game updateGame(GameDto gameDto) {
-        return gameRepository.save(modelMapper.map(gameDto,Game.class));
+        return gameRepository.save(gameMapper.dtoToEntity(gameDto));
+    }
+
+    @Override
+    public Optional<Game> findByName(String name) {
+        return gameRepository.findByName(name);
+    }
+
+    private void checkCategory(GameDto gameDto){
+        Set<CategoryFetchDto> categories = gameDto.getCategories();
+        if(!categories.isEmpty()){
+            for (CategoryFetchDto category: categories) {
+                Optional<Category> cat = categoryRepository.findByName(category.getName());
+                if(cat.isPresent()){
+
+                }
+            }
+        }
     }
 
 }

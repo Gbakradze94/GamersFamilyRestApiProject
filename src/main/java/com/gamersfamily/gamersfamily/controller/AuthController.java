@@ -18,8 +18,10 @@ import javax.validation.Valid;
 
 @Api(value = "Auth Controller exposes signin and signup REST APIs")
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping(AuthController.BASE_URL)
 public class AuthController {
+
+    public static final String BASE_URL = "/api/v1/auth";
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 

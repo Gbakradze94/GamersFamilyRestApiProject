@@ -1,10 +1,10 @@
 package com.gamersfamily.gamersfamily.service.ServiceImpl;
 
-import com.gamersfamily.gamersfamily.dto.GameFetchDto;
-import com.gamersfamily.gamersfamily.dto.PlatformsDto;
+import com.gamersfamily.gamersfamily.dto.GameDto;
+import com.gamersfamily.gamersfamily.model.Game;
+import com.gamersfamily.gamersfamily.service.GameService;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -12,43 +12,55 @@ import org.springframework.web.client.RestTemplate;
 
 
 import javax.annotation.PostConstruct;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Set;
+import java.util.Optional;
 
 @Profile("fetchGame")
 @Service
 @PropertySource("classpath:application-fetchGame.properties")
+@Slf4j
 public class FetchGameApiService {
 
     private static final String GAME_URL = "https://api.rawg.io/api/games";
     private static final String API_KEY = "125a2de5e7734f638760ae2bad8bd29d";
-    private static Integer GAME_ID = 1;
-    private static final String URL = GAME_URL + "/" + GAME_ID + "?key=" + API_KEY;
+    private final Integer START_GAME_LOOP_ID = 1;
+    private final Integer END_GAME_LOOP_ID = 2;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final GameService gameService;
+    private final RestTemplate restTemplate;
+
+    public FetchGameApiService(GameService gameService, RestTemplate restTemplate) {
+        this.gameService = gameService;
+        this.restTemplate = restTemplate;
+    }
+
 
     @PostConstruct
     public void getGameById(){
-        GameFetchDto gameDto = restTemplate.getForObject(URL, GameFetchDto.class);
-        String name = gameDto.getName();
-        String description = html2text(gameDto.getDescription());
-        String background_image = gameDto.getBackground_image();
-        LocalDate released = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(gameDto.getReleased()));
-        Set<PlatformsDto> platform = gameDto.getPlatforms();
-        String answer = "Name: " + name + "\n" + "Desc: " + description
-        + "\n" + "Image: " + background_image + "\n" + "released: " + released
-                + "\n" + "platforms: " + platform;
-        System.out.println(answer);
+        for (int gameId = START_GAME_LOOP_ID; gameId <= END_GAME_LOOP_ID; gameId++) {
+            StringBuilder url = new StringBuilder(GAME_URL + "/" + gameId + "?key=" + API_KEY);
+            try{
+                GameDto gameDto = restTemplate.getForObject(url.toString(), GameDto.class);
+                if(!checkIfGameValidity(gameDto.getName())){
+                    gameDto.setDescription(html2text(gameDto.getDescription()));
+                    gameService.saveGame(gameDto);
+                }
+            }catch(Exception e){
+                log.error(e.getMessage() + " ID: " + gameId);
+            }
+        }
+//        Set<PlatformsDto> platform = gameDto.getPlatforms();
+
     }
 
     private String html2text(String html) {
         return Jsoup.parse(html).text();
     }
 
-    @Bean
-    public RestTemplate getRestTemplate(){
-        return new RestTemplate();
+    private Boolean checkIfGameValidity(String name){
+        if (name != null && !name.isEmpty()) {
+            Optional<Game> game = gameService.findByName(name);
+            return game.isPresent();
+        }
+        return false;
     }
 }
