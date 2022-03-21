@@ -2,6 +2,7 @@ package com.gamersfamily.gamersfamily.controller;
 
 
 import com.gamersfamily.gamersfamily.dto.GameDto;
+import com.gamersfamily.gamersfamily.dto.GameOriginalDto;
 import com.gamersfamily.gamersfamily.model.Game;
 import com.gamersfamily.gamersfamily.service.GameService;
 import io.swagger.annotations.ApiOperation;
@@ -27,13 +28,13 @@ public class GameController {
 
     @ApiOperation(value = "Gets all games from database.")
     @GetMapping
-    public ResponseEntity<List<GameDto>> getGames() {
+    public ResponseEntity<List<GameOriginalDto>> getGames() {
         return new ResponseEntity<>(gameService.getAllGames(), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Gets games by page number and quantity of games on each page.")
     @GetMapping("/gamesByPage")
-    public ResponseEntity<List<GameDto>> getGamesByPage(@RequestParam Integer pageNumber,
+    public ResponseEntity<List<GameOriginalDto>> getGamesByPage(@RequestParam Integer pageNumber,
                                                         @RequestParam Integer pageSize) {
         return new ResponseEntity<>(gameService.getGamesByPage(pageNumber, pageSize), HttpStatus.OK);
     }
@@ -46,7 +47,7 @@ public class GameController {
 
     @ApiOperation(value = "Updates game.")
     @PutMapping("/{id}")
-    public ResponseEntity<Game> updateGame(@PathVariable Long id, @RequestBody GameDto gameDto) {
+    public ResponseEntity<Game> updateGame(@PathVariable Long id, @RequestBody GameOriginalDto gameDto) {
         gameDto.setId(id);
         return new ResponseEntity<>(gameService.updateGame(gameDto), HttpStatus.CREATED);
     }

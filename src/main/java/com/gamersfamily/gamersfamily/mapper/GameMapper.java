@@ -1,6 +1,7 @@
 package com.gamersfamily.gamersfamily.mapper;
 
 import com.gamersfamily.gamersfamily.dto.GameDto;
+import com.gamersfamily.gamersfamily.dto.GameOriginalDto;
 import com.gamersfamily.gamersfamily.dto.NewsDto;
 import com.gamersfamily.gamersfamily.model.Game;
 import com.gamersfamily.gamersfamily.model.News;
@@ -20,6 +21,14 @@ public class GameMapper {
     }
 
     public Game dtoToEntity(GameDto gameDto){
+        return modelMapper.map(gameDto, Game.class);
+    }
+
+    public GameOriginalDto originalEntityToDto(Game game){
+        return modelMapper.map(game, GameOriginalDto.class);
+    }
+
+    public Game originalDtoToEntity(GameOriginalDto gameDto){
         return modelMapper.map(gameDto, Game.class);
     }
 }

@@ -1,17 +1,17 @@
 package com.gamersfamily.gamersfamily.service.serviceimpl;
 
 
-import com.gamersfamily.gamersfamily.dto.CategoryFetchDto;
-import com.gamersfamily.gamersfamily.dto.GameDto;
-import com.gamersfamily.gamersfamily.dto.TagsDto;
+import com.gamersfamily.gamersfamily.dto.*;
 import com.gamersfamily.gamersfamily.mapper.CategoryMapper;
 import com.gamersfamily.gamersfamily.mapper.GameMapper;
 import com.gamersfamily.gamersfamily.mapper.TagMapper;
 import com.gamersfamily.gamersfamily.model.Category;
 import com.gamersfamily.gamersfamily.model.Game;
+import com.gamersfamily.gamersfamily.model.Platform;
 import com.gamersfamily.gamersfamily.model.Tag;
 import com.gamersfamily.gamersfamily.repository.CategoryRepository;
 import com.gamersfamily.gamersfamily.repository.GameRepository;
+import com.gamersfamily.gamersfamily.repository.PlatformRepository;
 import com.gamersfamily.gamersfamily.repository.TagRepository;
 import com.gamersfamily.gamersfamily.service.GameService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,32 +34,40 @@ public class GameServiceImpl implements GameService {
     private final CategoryMapper categoryMapper;
     private final TagRepository tagRepository;
     private final TagMapper tagMapper;
+    private final PlatformRepository platformRepository;
 
     private final GameMapper gameMapper;
 
-    public GameServiceImpl(GameRepository gameRepository, CategoryRepository categoryRepository, CategoryMapper categoryMapper, TagRepository tagRepository, TagMapper tagMapper, GameMapper gameMapper){
+    public GameServiceImpl(GameRepository gameRepository,
+                           CategoryRepository categoryRepository,
+                           CategoryMapper categoryMapper,
+                           TagRepository tagRepository,
+                           TagMapper tagMapper,
+                           PlatformRepository platformRepository,
+                           GameMapper gameMapper){
         this.gameRepository = gameRepository;
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
         this.tagRepository = tagRepository;
         this.tagMapper = tagMapper;
+        this.platformRepository = platformRepository;
         this.gameMapper = gameMapper;
     }
 
     @Override
-    public List<GameDto> getAllGames() {
+    public List<GameOriginalDto> getAllGames() {
         return gameRepository.findAll()
-                .stream().map(gameMapper::entityToDto)
+                .stream().map(gameMapper::originalEntityToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<GameDto> getGamesByPage(Integer pageNumber, Integer pageSize) {
+    public List<GameOriginalDto> getGamesByPage(Integer pageNumber, Integer pageSize) {
         Pageable pages = PageRequest.of(pageNumber,pageSize);
         return gameRepository.findAll(pages)
                 .getContent()
                 .stream()
-                .map(gameMapper::entityToDto)
+                .map(gameMapper::originalEntityToDto)
                 .collect(Collectors.toList());
     }
 
@@ -75,8 +83,8 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game updateGame(GameDto gameDto) {
-        return gameRepository.save(gameMapper.dtoToEntity(gameDto));
+    public Game updateGame(GameOriginalDto gameDto) {
+        return gameRepository.save(gameMapper.originalDtoToEntity(gameDto));
     }
 
     @Override
@@ -124,12 +132,35 @@ public class GameServiceImpl implements GameService {
 
     }
 
+    private Set<Platform> checkPlatform(GameDto gameDto){
+        if(gameDto.getPlatforms().isEmpty()){
+            return new HashSet<>();
+        }
+
+        Set<Platform> platformSet = new HashSet<>();
+        for (PlatformsDto platform:gameDto.getPlatforms()) {
+            Optional<Platform> dbCategory = platformRepository.findByName(platform.getPlatform().getName());
+            if(dbCategory.isEmpty()){
+                Platform newPlatform = new Platform();
+                newPlatform.setName(platform.getPlatform().getName());
+                Platform savedPlatform = platformRepository.save(newPlatform);
+                platformSet.add(savedPlatform);
+            }else{
+                platformSet.add(dbCategory.get());
+            }
+
+        }
+        return platformSet;
+    }
+
     private Game setGameProperties(GameDto gameDto){
         Set<Category> categorySet = checkCategory(gameDto);
         Set<Tag> tagSet = checkTag(gameDto);
+        Set<Platform> platformSet = checkPlatform(gameDto);
         Game game = gameMapper.dtoToEntity(gameDto);
         game.setCategories(categorySet);
         game.setTags(tagSet);
+        game.setPlatforms(platformSet);
         return game;
     }
 

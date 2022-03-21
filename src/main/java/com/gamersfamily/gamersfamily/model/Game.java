@@ -46,14 +46,13 @@ public class Game extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id")
     )
     private Set<Tag> tags;
-//
-//    @ElementCollection(targetClass = Platform.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "game_platforms",
-//            joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"))
-//    @Enumerated(EnumType.STRING)
-//    @Column(name = "platform")
-//
-//    private Set<Platform> type;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "game_platforms",
+            joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "platform_id", referencedColumnName = "id")
+    )
+    private Set<Platform> platforms;
 
     @Override
     public String toString() {

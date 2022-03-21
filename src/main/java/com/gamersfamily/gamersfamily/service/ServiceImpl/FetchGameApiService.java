@@ -45,6 +45,9 @@ public class FetchGameApiService {
             StringBuilder url = new StringBuilder(GAME_URL + "/" + gameId + "?key=" + API_KEY);
             try{
                 GameDto gameDto = restTemplate.getForObject(url.toString(), GameDto.class);
+                if(gameDto == null){
+                    continue;
+                }
                 if(!checkIfGameValidity(gameDto.getName())){
                     gameDto.setDescription(html2text(gameDto.getDescription()));
                     gameService.saveGame(gameDto);
