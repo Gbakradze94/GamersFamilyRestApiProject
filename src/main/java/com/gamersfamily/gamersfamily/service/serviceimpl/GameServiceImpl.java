@@ -3,10 +3,10 @@ package com.gamersfamily.gamersfamily.service.serviceimpl;
 
 import com.gamersfamily.gamersfamily.dto.CategoryFetchDto;
 import com.gamersfamily.gamersfamily.dto.GameDto;
+import com.gamersfamily.gamersfamily.mapper.CategoryMapper;
 import com.gamersfamily.gamersfamily.mapper.GameMapper;
 import com.gamersfamily.gamersfamily.model.Category;
 import com.gamersfamily.gamersfamily.model.Game;
-import com.gamersfamily.gamersfamily.model.Role;
 import com.gamersfamily.gamersfamily.repository.CategoryRepository;
 import com.gamersfamily.gamersfamily.repository.GameRepository;
 import com.gamersfamily.gamersfamily.service.GameService;
@@ -25,12 +25,14 @@ public class GameServiceImpl implements GameService {
 
     private final GameRepository gameRepository;
     private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     private final GameMapper gameMapper;
 
-    public GameServiceImpl(GameRepository gameRepository, CategoryRepository categoryRepository, GameMapper gameMapper){
+    public GameServiceImpl(GameRepository gameRepository, CategoryRepository categoryRepository, CategoryMapper categoryMapper, GameMapper gameMapper){
         this.gameRepository = gameRepository;
         this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
         this.gameMapper = gameMapper;
     }
 
@@ -73,15 +75,21 @@ public class GameServiceImpl implements GameService {
     }
 
     private void checkCategory(GameDto gameDto){
-        Set<CategoryFetchDto> categories = gameDto.getCategories();
-        if(!categories.isEmpty()){
-            for (CategoryFetchDto category: categories) {
-                Optional<Category> cat = categoryRepository.findByName(category.getName());
-                if(cat.isPresent()){
-
-                }
+        if(gameDto.getCategories().isEmpty()){
+            return;
+        }
+//        [adventure, puzzle, action]
+        Set<CategoryFetchDto> categorySet = new HashSet<>();
+        for (CategoryFetchDto category:gameDto.getCategories()) {
+            Optional<Category> dbCategory = categoryRepository.findByName(category.getName());
+            if(dbCategory.isEmpty()){
+                categoryRepository.save(categoryMapper.fetchDtoToEntity(category));
+                categorySet.add(category);
+            }else{
+                categorySet.add(categoryMapper.entityToFetchDto(dbCategory.get()));
             }
         }
+        gameDto.setCategories(categorySet);
     }
 
 }

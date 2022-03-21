@@ -1,6 +1,7 @@
 package com.gamersfamily.gamersfamily.mapper;
 
 import com.gamersfamily.gamersfamily.dto.CategoryDto;
+import com.gamersfamily.gamersfamily.dto.CategoryFetchDto;
 import com.gamersfamily.gamersfamily.dto.GameDto;
 import com.gamersfamily.gamersfamily.model.Category;
 import com.gamersfamily.gamersfamily.model.Game;
@@ -20,6 +21,14 @@ public class CategoryMapper {
     }
 
     public Category dtoToEntity(CategoryDto categoryDto){
+        return modelMapper.map(categoryDto, Category.class);
+    }
+
+    public CategoryFetchDto entityToFetchDto(Category category){
+        return modelMapper.map(category, CategoryFetchDto.class);
+    }
+
+    public Category fetchDtoToEntity(CategoryFetchDto categoryDto){
         return modelMapper.map(categoryDto, Category.class);
     }
 }

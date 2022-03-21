@@ -35,7 +35,7 @@ public class FetchGameApiService {
 
 
     @PostConstruct
-    public void getGameById(){
+    public void copyGamesToDatabase(){
         for (int gameId = START_GAME_LOOP_ID; gameId <= END_GAME_LOOP_ID; gameId++) {
             StringBuilder url = new StringBuilder(GAME_URL + "/" + gameId + "?key=" + API_KEY);
             try{
