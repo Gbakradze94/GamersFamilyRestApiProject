@@ -7,6 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryFetchDto {
+
+    private Long id;
+
     @JsonProperty("name")
     private String name;
 

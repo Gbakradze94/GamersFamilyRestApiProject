@@ -1,6 +1,4 @@
 package com.gamersfamily.gamersfamily.model;
-
-import com.gamersfamily.gamersfamily.utils.enums.Platform;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,6 +39,13 @@ public class Game extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id")
     )
     private Set<Category> categories;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "game_tags",
+            joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id")
+    )
+    private Set<Tag> tags;
 //
 //    @ElementCollection(targetClass = Platform.class, fetch = FetchType.EAGER)
 //    @CollectionTable(name = "game_platforms",

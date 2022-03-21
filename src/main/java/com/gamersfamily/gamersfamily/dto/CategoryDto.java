@@ -10,6 +10,9 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDto {
+
+    private Long id;
+
     @NotEmpty(message = "Name Should not be empty")
     private String name;
 }

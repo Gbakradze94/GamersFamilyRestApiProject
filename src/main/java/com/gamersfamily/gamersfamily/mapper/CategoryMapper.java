@@ -2,9 +2,7 @@ package com.gamersfamily.gamersfamily.mapper;
 
 import com.gamersfamily.gamersfamily.dto.CategoryDto;
 import com.gamersfamily.gamersfamily.dto.CategoryFetchDto;
-import com.gamersfamily.gamersfamily.dto.GameDto;
 import com.gamersfamily.gamersfamily.model.Category;
-import com.gamersfamily.gamersfamily.model.Game;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

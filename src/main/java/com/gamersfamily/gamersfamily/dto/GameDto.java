@@ -32,8 +32,8 @@ public class GameDto {
     @JsonProperty("genres")
     private Set<CategoryFetchDto> categories;
 
-//    @JsonProperty("tags")
-//    private Set<TagsDto> tags;
+    @JsonProperty("tags")
+    private Set<TagsDto> tags;
 
 //    private Set<PlatformsDto> platforms;
 

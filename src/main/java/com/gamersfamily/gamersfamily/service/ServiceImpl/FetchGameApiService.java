@@ -1,6 +1,7 @@
 package com.gamersfamily.gamersfamily.service.ServiceImpl;
 
 import com.gamersfamily.gamersfamily.dto.GameDto;
+import com.gamersfamily.gamersfamily.model.Category;
 import com.gamersfamily.gamersfamily.model.Game;
 import com.gamersfamily.gamersfamily.service.GameService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,10 @@ import org.springframework.web.client.RestTemplate;
 
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Profile("fetchGame")
 @Service
@@ -36,6 +40,7 @@ public class FetchGameApiService {
 
     @PostConstruct
     public void copyGamesToDatabase(){
+
         for (int gameId = START_GAME_LOOP_ID; gameId <= END_GAME_LOOP_ID; gameId++) {
             StringBuilder url = new StringBuilder(GAME_URL + "/" + gameId + "?key=" + API_KEY);
             try{
