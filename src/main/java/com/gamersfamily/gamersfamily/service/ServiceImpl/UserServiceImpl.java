@@ -51,6 +51,8 @@ public class UserServiceImpl implements UserService {
         user.setUsername(signUpDto.getUsername());
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+        user.setVerificationcode(signUpDto.getVerificationcode());
+        user.setEnabled(signUpDto.isEnabled());
 
         if(roleRepository.findByName("ROLE_USER").isEmpty()){
             return new ResponseEntity<>("Role_User Does not Exist in Database", HttpStatus.BAD_REQUEST);
@@ -75,9 +77,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean verify(String verificationCode) {
-        User user = userRepository.findByVerificationCode(verificationCode);
+        User user = userRepository.findByVerificationcode(verificationCode);
 
-        if (user == null || user.isEnabled()) {
+        if (user == null   || user.isEnabled()) {
             return false;
         } else {
             userRepository.enable(user.getId());

@@ -34,9 +34,9 @@ public class UserDto {
     @Size(min=3, message = "Password Should be at least 3 chars")
     private String password;
 
-    private String verificationCode;
+    private boolean enabled;
 
-    private boolean isEnabled;
+    private String verificationcode;
 
     private Set<Role> roles;
 

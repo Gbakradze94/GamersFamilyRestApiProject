@@ -43,7 +43,7 @@ public class EmailSettingBag extends SettingBag {
         return super.getValue("MAIL_SENDER_NAME");
     }
 
-    public String getCustomerVerifySubject() {
+    public String getUserVerifySubject() {
         return super.getValue("CUSTOMER_VERIFY_SUBJECT");
     }
 

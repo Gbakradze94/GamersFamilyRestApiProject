@@ -6,12 +6,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "settings")
 public class Setting {
     @Id
-    @Column(name = "`key`", nullable = false, length = 128)
+    @Column(name = "key", nullable = false, length = 128)
     private String key;
 
     @Column(nullable = false, length = 1024)
@@ -21,7 +20,12 @@ public class Setting {
     @Column(length = 45, nullable = false)
     private SettingCategory category;
 
+    public Setting(){
+
+    }
+
     public Setting(String key) {
+        this.key = key;
     }
 
     public String getKey() {

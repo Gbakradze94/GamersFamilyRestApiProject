@@ -3,14 +3,13 @@ package com.gamersfamily.gamersfamily.controller;
 import com.gamersfamily.gamersfamily.dto.JWTAuthResponse;
 import com.gamersfamily.gamersfamily.dto.LoginDto;
 import com.gamersfamily.gamersfamily.dto.SignUpDto;
-import com.gamersfamily.gamersfamily.dto.UserDto;
 import com.gamersfamily.gamersfamily.service.SettingService;
 import com.gamersfamily.gamersfamily.service.UserService;
 import com.gamersfamily.gamersfamily.utils.mail.EmailSettingBag;
 import com.gamersfamily.gamersfamily.utils.mail.SettingUtility;
-import com.sun.mail.imap.Utility;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 
 @Api(value = "Auth Controller exposes signin and signup REST APIs")
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -45,15 +45,15 @@ public class AuthController {
 
     @ApiOperation(value = "REST API to register or Signup user to Blog application")
     @PostMapping("/signin")
-    public ResponseEntity<JWTAuthResponse> authenticationUser(@Valid @RequestBody LoginDto loginDto){
+    public ResponseEntity<JWTAuthResponse> authenticationUser(@Valid @RequestBody LoginDto loginDto) {
         logger.info("Sign in User");
         return userService.signInUser(loginDto);
     }
 
     @ApiOperation(value = "REST API to Signin or Login user to Blog application")
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpDto signUpDto, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
-        sendVerificationEmail(request,signUpDto);
+    public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+        sendVerificationEmail(request, signUpDto);
         logger.info("Registering User");
         return userService.registerUser(signUpDto);
     }
@@ -63,8 +63,8 @@ public class AuthController {
         JavaMailSender mailSender = SettingUtility.prepareMailSender(emailSettings);
 
         String toAddress = user.getEmail();
-        String subject = "Verify Registration";
-        String content = "Congratulations! You have successfully registered.";
+        String subject = emailSettings.getUserVerifySubject();
+        String content = emailSettings.getCustomerVerifyContent();
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -74,9 +74,10 @@ public class AuthController {
         helper.setSubject(subject);
 
         content = content.replace("[[name]]", user.getUsername());
+        logger.info(content);
+        String verifyURL = SettingUtility.getSiteURL(request) + "/api/v1/auth/verify?code=" + user.getVerificationcode();
 
-        String verifyURL = SettingUtility.getSiteURL(request) + "/verify?code=" + user.getVerificationCode();
-
+        logger.info("VERIFY URL value: " + verifyURL);
         content = content.replace("[[URL]]",verifyURL);
 
         helper.setText(content, true);
@@ -85,13 +86,17 @@ public class AuthController {
     }
 
     @GetMapping("/verify")
-    public ResponseEntity<HttpStatus> verifyAccount(@Param("code") String code){
+    public ResponseEntity<HttpStatus> verifyAccount(@Param("code") String code) {
 
-         boolean verified = userService.verify(code);
-        if(verified == true){
+        boolean verified = userService.verify(code);
+        if (verified == true) {
+            log.info("VERIFIED");
             return new ResponseEntity<>(HttpStatus.OK);
-        }else {
+
+        } else {
+            log.info("NOT VERIFIED");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         }
     }
 }

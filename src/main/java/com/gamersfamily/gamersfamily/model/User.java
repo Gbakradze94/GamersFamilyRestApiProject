@@ -20,12 +20,14 @@ import java.util.Set;
 public class User extends BaseEntity {
 
     @Builder
-    private static User  of(long id, String username, String email, String password) {
+    private static User  of(long id, String username, String email, String password, boolean enabled, String verificationcode) {
         User user = new User();
         user.setId(id);
         user.username = username;
         user.email = email;
         user.password = password;
+        user.enabled = enabled;
+        user.verificationcode = verificationcode;
         return user;
     }
 
@@ -38,11 +40,23 @@ public class User extends BaseEntity {
     @Column(name = "password", nullable = false, length = 200)
     private String password;
 
-    @Column(name = "verificationCode", length = 64)
-    private String verificationCode;
+    @Column(name = "verificationCode")
+    private String verificationcode;
 
-    @Column(name = "enabled", length = 64)
-    private boolean isEnabled;
+    @Column(name = "enabled")
+    public boolean enabled;
+
+    public String getVerificationcode() {
+        return verificationcode;
+    }
+
+    public void setVerificationcode(String verificationcode) {
+        this.verificationcode = verificationcode;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",
@@ -61,6 +75,9 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "author")
     private List<Rating> ratings;
 
+    public boolean isEnabled(){
+        return enabled;
+    }
 
     @Override
     public String toString() {

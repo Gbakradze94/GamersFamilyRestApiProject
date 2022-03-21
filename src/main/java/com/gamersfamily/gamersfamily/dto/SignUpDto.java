@@ -25,8 +25,8 @@ public class SignUpDto {
     @Pattern(regexp ="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",message ="password should contain at least one digit, one upper case character, one lowercase character, one special symbol (@$!%*?&) and  should be at least 8 characters long")
     private String password;
 
-    @Column(name = "verification_code", length = 64)
-    private String verificationCode;
 
-    private boolean isEnabled;
+    private String verificationcode;
+
+    private boolean enabled;
 }
