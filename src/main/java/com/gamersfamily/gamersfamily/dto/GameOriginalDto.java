@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -33,4 +34,5 @@ public class GameOriginalDto {
 
     private Set<PlatformDto> platforms;
 
+    private List<RatingDto> ratings;
 }

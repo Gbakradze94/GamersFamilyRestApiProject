@@ -2,27 +2,24 @@ package com.gamersfamily.gamersfamily.service.serviceimpl;
 
 
 import com.gamersfamily.gamersfamily.dto.*;
+import com.gamersfamily.gamersfamily.exception.BlogAPIException;
+import com.gamersfamily.gamersfamily.exception.ResourceNotFoundException;
 import com.gamersfamily.gamersfamily.mapper.CategoryMapper;
 import com.gamersfamily.gamersfamily.mapper.GameMapper;
 import com.gamersfamily.gamersfamily.mapper.TagMapper;
-import com.gamersfamily.gamersfamily.model.Category;
-import com.gamersfamily.gamersfamily.model.Game;
-import com.gamersfamily.gamersfamily.model.Platform;
-import com.gamersfamily.gamersfamily.model.Tag;
-import com.gamersfamily.gamersfamily.repository.CategoryRepository;
-import com.gamersfamily.gamersfamily.repository.GameRepository;
-import com.gamersfamily.gamersfamily.repository.PlatformRepository;
-import com.gamersfamily.gamersfamily.repository.TagRepository;
+import com.gamersfamily.gamersfamily.model.*;
+import com.gamersfamily.gamersfamily.repository.*;
 import com.gamersfamily.gamersfamily.service.GameService;
+import com.gamersfamily.gamersfamily.utils.enums.Rate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +32,8 @@ public class GameServiceImpl implements GameService {
     private final TagRepository tagRepository;
     private final TagMapper tagMapper;
     private final PlatformRepository platformRepository;
+    private final UserRepository userRepository;
+    private final RatingRepository ratingRepository;
 
     private final GameMapper gameMapper;
 
@@ -44,13 +43,15 @@ public class GameServiceImpl implements GameService {
                            TagRepository tagRepository,
                            TagMapper tagMapper,
                            PlatformRepository platformRepository,
-                           GameMapper gameMapper){
+                           UserRepository userRepository, RatingRepository ratingRepository, GameMapper gameMapper){
         this.gameRepository = gameRepository;
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
         this.tagRepository = tagRepository;
         this.tagMapper = tagMapper;
         this.platformRepository = platformRepository;
+        this.userRepository = userRepository;
+        this.ratingRepository = ratingRepository;
         this.gameMapper = gameMapper;
     }
 
@@ -90,6 +91,37 @@ public class GameServiceImpl implements GameService {
     @Override
     public Optional<Game> findByName(String name) {
         return gameRepository.findByName(name);
+    }
+
+    @Override
+    public Game addRatingToGame(long gameId, Rate rate) {
+        User user = userRepository.findByEmail(getAuthenticatedUserEmail()).orElseThrow(
+                NoSuchElementException::new
+        );
+
+        Game game = checkGameById(gameId);
+        if(ratingRepository.countUserRatingForGivenGame(game, user) >= 1){
+            throw new BlogAPIException(("User: " + user.getUsername() +
+                    " Already Gave A rating to The Game by ID: " + gameId), HttpStatus.BAD_REQUEST);
+        }
+        Rating rating = new Rating();
+        rating.setAuthor(user);
+        rating.setRate(rate);
+        rating.setGame(game);
+        ratingRepository.save(rating);
+        game.getRatings().add(rating);
+        return game;
+    }
+
+    @Override
+    public Game checkGameById(long gameId) {
+        return gameRepository.findById(gameId).orElseThrow(
+                ()-> new ResourceNotFoundException("Game", "id", gameId));
+    }
+
+    private String getAuthenticatedUserEmail(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
     }
 
     private Set<Category> checkCategory(GameDto gameDto){

@@ -5,6 +5,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 
@@ -53,6 +54,9 @@ public class Game extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "platform_id", referencedColumnName = "id")
     )
     private Set<Platform> platforms;
+
+    @OneToMany(mappedBy = "game")
+    private List<Rating> ratings;
 
     @Override
     public String toString() {

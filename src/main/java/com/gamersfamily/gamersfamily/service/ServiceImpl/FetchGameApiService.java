@@ -13,10 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 @Profile("fetchGame")
 @Service

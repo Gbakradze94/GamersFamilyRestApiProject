@@ -12,8 +12,8 @@ import lombok.*;
 public class RatingOutputDto extends RatingDto{
     private String username;
     private long id;
-    public RatingOutputDto(long id, String username, Rate rate, long userId, long newsId){
-        super(rate,userId,newsId);
+    public RatingOutputDto(long id, String username, Rate rate, long userId, long newsId, long gameId){
+        super(rate,userId,newsId, gameId);
         this.id=id;
         this.username=username;
     }

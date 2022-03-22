@@ -11,5 +11,4 @@ import java.util.Optional;
 public interface GameRepository extends PagingAndSortingRepository<Game,Long> {
     List<Game> findAll();
     Optional<Game> findByName(String name);
-
 }

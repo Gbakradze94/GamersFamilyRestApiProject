@@ -5,9 +5,11 @@ import com.gamersfamily.gamersfamily.dto.GameDto;
 import com.gamersfamily.gamersfamily.dto.GameOriginalDto;
 import com.gamersfamily.gamersfamily.model.Game;
 import com.gamersfamily.gamersfamily.service.GameService;
+import com.gamersfamily.gamersfamily.utils.enums.Rate;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -57,6 +59,14 @@ public class GameController {
     public ResponseEntity<HttpStatus> deleteGames(@RequestParam("id") Long id) {
         gameService.deleteGame(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @ApiOperation(value = "Add Rating to game.")
+    @PatchMapping("rating/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR', 'USER')")
+    public ResponseEntity<HttpStatus> addRatingToGame(@RequestParam("id") Long id, Rate rate) {
+        gameService.addRatingToGame(id, rate);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }
