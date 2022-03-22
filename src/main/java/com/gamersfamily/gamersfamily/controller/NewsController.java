@@ -13,8 +13,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/news")
+@RequestMapping(NewsController.BASE_URL)
 public class NewsController {
+
+    public static final String BASE_URL = "/api/v1/news";
 
     private static final Logger logger = LoggerFactory.getLogger(NewsController.class);
 

@@ -67,7 +67,7 @@ public class RatingServiceTest {
     @Test
     @WithMockUser(username = "email@gmail.ru")
     public void c_updateRatingTest() {
-        RatingOutputDto dto = new RatingOutputDto(500, "anna", Rate.TWO, 100, 200);
+        RatingOutputDto dto = new RatingOutputDto(500, "anna", Rate.TWO, 100, 200, 300);
         RatingOutputDto dtoOutput = ratingService.updateRating(dto);
         Assert.assertEquals(Rate.TWO, dtoOutput.getRate());
     }

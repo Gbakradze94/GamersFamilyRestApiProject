@@ -1,6 +1,5 @@
 package com.gamersfamily.gamersfamily.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,18 +12,17 @@ import javax.persistence.UniqueConstraint;
 @Setter
 @Entity
 @Table(
-        name = "categories",
+        name = "tags",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
 )
-public class Category extends BaseEntity {
-
+public class Tag extends BaseEntity{
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
 
     @Override
     public String toString() {
-        return "Category{" +
+        return "Tag{" +
                 "ID: " + getId() +
                 ", name='" + getName() +
                 '}';

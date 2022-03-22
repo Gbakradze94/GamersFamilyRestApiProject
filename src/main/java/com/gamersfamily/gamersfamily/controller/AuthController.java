@@ -18,8 +18,10 @@ import javax.validation.Valid;
 
 @Api(value = "Auth Controller exposes signin and signup REST APIs")
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping(AuthController.BASE_URL)
 public class AuthController {
+
+    public static final String BASE_URL = "/api/v1/auth";
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
@@ -29,14 +31,14 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @ApiOperation(value = "REST API to register or Signup user to Blog application")
+    @ApiOperation(value = "REST API to Sign user In to Blog application")
     @PostMapping("/signin")
     public ResponseEntity<JWTAuthResponse> authenticationUser(@Valid @RequestBody LoginDto loginDto){
         logger.info("Sign in User");
         return userService.signInUser(loginDto);
     }
 
-    @ApiOperation(value = "REST API to Signin or Login user to Blog application")
+    @ApiOperation(value = "REST API to Register user to Blog application")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpDto signUpDto){
         logger.info("Registering User");

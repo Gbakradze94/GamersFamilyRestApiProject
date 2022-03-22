@@ -25,6 +25,10 @@ public class Rating extends BaseEntity {
     @JoinColumn(name = "news_id")
     private News news;
 
+    @ManyToOne
+    @JoinColumn(name = "game_id")
+    private Game game;
+
 
     @Override
     public String toString() {

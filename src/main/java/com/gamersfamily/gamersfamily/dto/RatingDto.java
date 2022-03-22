@@ -25,7 +25,9 @@ public class RatingDto {
     private Rate rate;
     @NotNull
     private long userId;
-    @NotNull
+
     private long newsId;
+
+    private long gameId;
 
 }
