@@ -2,6 +2,7 @@ package com.gamersfamily.gamersfamily.service.serviceimpl;
 
 import com.gamersfamily.gamersfamily.dto.RatingDto;
 import com.gamersfamily.gamersfamily.dto.RatingOutputDto;
+import com.gamersfamily.gamersfamily.exception.BlogAPIException;
 import com.gamersfamily.gamersfamily.mapper.RatingMapper;
 import com.gamersfamily.gamersfamily.model.Rating;
 import com.gamersfamily.gamersfamily.model.User;
@@ -9,9 +10,13 @@ import com.gamersfamily.gamersfamily.repository.RatingRepository;
 import com.gamersfamily.gamersfamily.repository.UserRepository;
 import com.gamersfamily.gamersfamily.service.RatingService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Slf4j
 @Service
 public class RatingServiceImpl implements RatingService {
@@ -30,10 +35,13 @@ public class RatingServiceImpl implements RatingService {
     public RatingOutputDto saveRating(RatingDto rating) {
         User user = userRepository.findById(rating.getUserId())
                 .orElseThrow(() -> {
-                    throw new IllegalArgumentException("no user with given id found");
+                    throw new BlogAPIException("no user with given id found", HttpStatus.BAD_REQUEST);
                 });
+        if (!user.getEmail().equals(getAuthenticatedUserEmail())){
+            throw new BlogAPIException("rating does not belong to the authenticated user", HttpStatus.BAD_REQUEST);
+        }
         Rating ratingResult = user.getRatings().stream()
-                .filter(src -> src.getNews().getId()==rating.getNewsId())
+                .filter(src -> src.getNews().getId() == rating.getNewsId())
                 .findFirst()
                 .orElseGet(() -> ratingRepository.save(ratingMapper.dtoToEntity(rating)));
         return ratingMapper.entityToDto(ratingResult);
@@ -48,15 +56,15 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public RatingOutputDto deleteRating(long ratingId, long authorId) {
         Rating rating = ratingRepository.findById(ratingId).orElseThrow(() -> {
-            throw new IllegalArgumentException("rating with this id can not be found to delete");
+            throw new BlogAPIException("rating with this id can not be found to delete", HttpStatus.BAD_REQUEST);
         });
-        if (rating.getAuthor().getId() == authorId) {
+        if (rating.getAuthor().getEmail().equals(getAuthenticatedUserEmail())) {
             RatingOutputDto output = ratingMapper.entityToDto(rating);
             System.out.println("deleting the rating");
             ratingRepository.deleteById(ratingId);
             return output;
         } else {
-            throw new IllegalArgumentException("authorId does not belong to the id of the rating author");
+            throw new BlogAPIException("rating does not belong to the authenticated user", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -64,11 +72,21 @@ public class RatingServiceImpl implements RatingService {
     public RatingOutputDto updateRating(RatingOutputDto rating) {
         Rating ratingFound = ratingRepository.findById(rating.getId())
                 .orElseThrow(() -> {
-                    throw new IllegalArgumentException("rating with this id can not be found to change");
+                    throw new BlogAPIException("rating with this id can not be found to change", HttpStatus.BAD_REQUEST);
                 });
         ratingFound.setRate(rating.getRate());
-        if (ratingFound.getAuthor().getId() == rating.getUserId() && ratingFound.getNews().getId() == rating.getNewsId())
+        if (!ratingFound.getAuthor().getEmail().equals(getAuthenticatedUserEmail())) {
+            throw new BlogAPIException("rating does not belong to the authenticated user", HttpStatus.BAD_REQUEST);
+        } else if (ratingFound.getNews().getId() != rating.getNewsId()) {
+            throw new BlogAPIException("news id does not belong to this rating ", HttpStatus.BAD_REQUEST);
+        } else {
             return ratingMapper.entityToDto(ratingRepository.save(ratingFound));
-        else throw new IllegalArgumentException("newsId or UserId is not correct");
+        }
+
+    }
+
+    private String getAuthenticatedUserEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
     }
 }

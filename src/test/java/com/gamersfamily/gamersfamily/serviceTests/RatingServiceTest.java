@@ -12,6 +12,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class RatingServiceTest {
     @Autowired
     private RatingService ratingService;
@@ -28,6 +31,7 @@ public class RatingServiceTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "email@gmail.ru")
     public void ba_saveRatingTestWhenUserHasAlreadyRatedTheNews() {
         RatingDto dto = RatingDto.builder().rate(Rate.FIVE)
                 .newsId(200)
@@ -40,6 +44,7 @@ public class RatingServiceTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "mishamisha@gmail.ru")
     public void bb_saveRatingTest() {
         RatingDto dto = RatingDto.builder().rate(Rate.THREE)
                 .newsId(200)
@@ -51,6 +56,7 @@ public class RatingServiceTest {
     }
 
     @Test
+    @WithMockUser(username = "email@gmail.ru")
     public void a_getRatingTest() {
         List<RatingOutputDto> output = ratingService.getRatingsForNews(200);
         System.out.println(output);
@@ -59,6 +65,7 @@ public class RatingServiceTest {
     }
 
     @Test
+    @WithMockUser(username = "email@gmail.ru")
     public void c_updateRatingTest() {
         RatingOutputDto dto = new RatingOutputDto(500, "anna", Rate.TWO, 100, 200, 300);
         RatingOutputDto dtoOutput = ratingService.updateRating(dto);
@@ -67,6 +74,7 @@ public class RatingServiceTest {
 
 
     @Test(expected = IllegalArgumentException.class)
+    @WithMockUser(username = "email@gmail.ru")
     public void d_deleteRatingTest() {
         RatingOutputDto output = ratingService.deleteRating(500, 100);
         ratingRepo.findById(output.getId()).orElseThrow(() -> {

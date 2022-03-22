@@ -23,7 +23,7 @@ public class Game extends BaseEntity {
     private String name;
 
     @Lob
-    @Column(name = "description", columnDefinition = "CLOB")
+    @Column(name = "description")
     private String description;
 
     @Column(name = "image_url")
