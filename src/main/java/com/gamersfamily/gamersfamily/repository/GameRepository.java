@@ -10,5 +10,9 @@ import java.util.Optional;
 
 public interface GameRepository extends PagingAndSortingRepository<Game,Long> {
     List<Game> findAll();
+    List<Game> findByPlatforms_NameIgnoreCase(String platformName);
+    List<Game> findByTags_NameIgnoreCase(String tagName);
+    List<Game> findByCategories_NameIgnoreCase(String tagName);
     Optional<Game> findByName(String name);
+
 }

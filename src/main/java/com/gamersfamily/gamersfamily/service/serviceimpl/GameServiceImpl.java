@@ -73,6 +73,27 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public List<GameOriginalDto> getAllGamesByPlatform(String platform) {
+        return gameRepository.findByPlatforms_NameIgnoreCase(platform)
+                .stream().map(gameMapper::originalEntityToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GameOriginalDto> getAllGamesByTag(String tag) {
+        return gameRepository.findByTags_NameIgnoreCase(tag)
+                .stream().map(gameMapper::originalEntityToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GameOriginalDto> getAllGamesByCategory(String category) {
+        return gameRepository.findByCategories_NameIgnoreCase(category)
+                .stream().map(gameMapper::originalEntityToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Game saveGame(GameDto gameDto) {
         Game game = setGameProperties(gameDto);
         return gameRepository.save(game);

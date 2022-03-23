@@ -69,4 +69,21 @@ public class GameController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Gets all games from database by platform.")
+    @GetMapping("/gamesByPlatform/{platform}")
+    public ResponseEntity<List<GameOriginalDto>> getGamesByPlatform(@RequestParam("platform") String platform) {
+        return new ResponseEntity<>(gameService.getAllGamesByPlatform(platform), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Gets all games from database by tag.")
+    @GetMapping("/gamesByTag/{tag}")
+    public ResponseEntity<List<GameOriginalDto>> getGamesByTag(@RequestParam("tag") String tag) {
+        return new ResponseEntity<>(gameService.getAllGamesByTag(tag), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Gets all games from database by category.")
+    @GetMapping("/gamesByCategory/{category}")
+    public ResponseEntity<List<GameOriginalDto>> getGamesByCategory(@RequestParam("category") String category) {
+        return new ResponseEntity<>(gameService.getAllGamesByCategory(category), HttpStatus.OK);
+    }
 }
