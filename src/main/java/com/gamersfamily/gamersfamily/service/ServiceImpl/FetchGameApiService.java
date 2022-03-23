@@ -53,7 +53,6 @@ public class FetchGameApiService {
                 log.error(e.getMessage() + " ID: " + gameId);
             }
         }
-//        Set<PlatformsDto> platform = gameDto.getPlatforms();
 
     }
 

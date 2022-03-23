@@ -15,6 +15,12 @@ public interface GameService {
 
     List<GameOriginalDto> getGamesByPage(Integer pageNumber, Integer pageSize);
 
+    List<GameOriginalDto> getAllGamesByPlatform(String platform);
+
+    List<GameOriginalDto> getAllGamesByTag(String tag);
+
+    List<GameOriginalDto> getAllGamesByCategory(String category);
+
     Game saveGame(GameDto gameDto);
 
     void deleteGame(Long id);
