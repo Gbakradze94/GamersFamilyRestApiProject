@@ -10,4 +10,5 @@ public class GamersFamilyRestApiApplication {
 		SpringApplication.run(GamersFamilyRestApiApplication.class, args);
 	}
 
+
 }
