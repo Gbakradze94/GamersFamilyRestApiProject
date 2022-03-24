@@ -3,6 +3,7 @@ package com.gamersfamily.gamersfamily.controller;
 
 import com.gamersfamily.gamersfamily.dto.GameDto;
 import com.gamersfamily.gamersfamily.dto.GameOriginalDto;
+import com.gamersfamily.gamersfamily.dto.GameOriginalRatingDto;
 import com.gamersfamily.gamersfamily.model.Game;
 import com.gamersfamily.gamersfamily.service.GameService;
 import com.gamersfamily.gamersfamily.utils.enums.Rate;
@@ -30,7 +31,7 @@ public class GameController {
 
     @ApiOperation(value = "Gets all games from database.")
     @GetMapping
-    public ResponseEntity<List<GameOriginalDto>> getGames() {
+    public ResponseEntity<List<GameOriginalRatingDto>> getGames() {
         return new ResponseEntity<>(gameService.getAllGames(), HttpStatus.OK);
     }
 

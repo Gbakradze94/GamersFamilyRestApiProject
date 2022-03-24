@@ -56,9 +56,9 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<GameOriginalDto> getAllGames() {
+    public List<GameOriginalRatingDto> getAllGames() {
         return gameRepository.findAll()
-                .stream().map(gameMapper::originalEntityToDto)
+                .stream().map(gameMapper::originalDtoToRatingEntity)
                 .collect(Collectors.toList());
     }
 

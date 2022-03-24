@@ -1,5 +1,10 @@
 package com.gamersfamily.gamersfamily.dto;
 
+import com.gamersfamily.gamersfamily.model.Game;
+import com.gamersfamily.gamersfamily.repository.GameRepository;
+import com.gamersfamily.gamersfamily.repository.RatingRepository;
+import com.gamersfamily.gamersfamily.service.GameService;
+import com.gamersfamily.gamersfamily.utils.enums.Rate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +15,9 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class GameOriginalDto {
+@NoArgsConstructor
+public class GameOriginalRatingDto {
 
     public static final String VALIDATION_MESSAGE_FOR_NAME = "Name of the game cannot be " +
             "empty and it should contain at least one non-whitespace character.";
@@ -34,6 +39,15 @@ public class GameOriginalDto {
 
     private Set<PlatformDto> platforms;
 
-    private List<RatingDto> ratings;
+    private Long Rating;
 
+    public void setRating(List<Rate> ratings) {
+
+        long sum = 0;
+        for (Rate r: ratings) {
+            sum = sum + r.getRate();
+        }
+
+        this.Rating = sum / ratings.size();
+    }
 }
