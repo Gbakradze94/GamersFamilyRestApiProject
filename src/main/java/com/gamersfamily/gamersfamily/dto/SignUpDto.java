@@ -2,6 +2,7 @@ package com.gamersfamily.gamersfamily.dto;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -23,4 +24,9 @@ public class SignUpDto {
 
 //    @Pattern(regexp ="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",message ="password should contain at least one digit, one upper case character, one lowercase character, one special symbol (@$!%*?&) and  should be at least 8 characters long")
     private String password;
+
+
+    private String verificationcode;
+
+    private boolean enabled;
 }

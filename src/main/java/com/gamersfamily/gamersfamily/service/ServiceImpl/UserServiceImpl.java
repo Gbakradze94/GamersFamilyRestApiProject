@@ -1,4 +1,4 @@
-package com.gamersfamily.gamersfamily.service.ServiceImpl;
+package com.gamersfamily.gamersfamily.service.serviceimpl;
 
 import com.gamersfamily.gamersfamily.dto.JWTAuthResponse;
 import com.gamersfamily.gamersfamily.dto.LoginDto;
@@ -51,6 +51,8 @@ public class UserServiceImpl implements UserService {
         user.setUsername(signUpDto.getUsername());
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+        user.setVerificationcode(signUpDto.getVerificationcode());
+        user.setEnabled(signUpDto.isEnabled());
 
         if(roleRepository.findByName("ROLE_USER").isEmpty()){
             return new ResponseEntity<>("Role_User Does not Exist in Database", HttpStatus.BAD_REQUEST);
@@ -72,5 +74,16 @@ public class UserServiceImpl implements UserService {
 
         String token = tokenProvider.generateToken(authentication);
         return ResponseEntity.ok(new JWTAuthResponse(token));
+    }
+
+    public boolean verify(String verificationCode) {
+        User user = userRepository.findByVerificationcode(verificationCode);
+
+        if (user == null   || user.isEnabled()) {
+            return false;
+        } else {
+            userRepository.enable(user.getId());
+            return true;
+        }
     }
 }
