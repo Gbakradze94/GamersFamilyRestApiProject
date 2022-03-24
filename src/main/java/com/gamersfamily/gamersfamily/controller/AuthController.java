@@ -42,14 +42,11 @@ public class AuthController {
         this.userService = userService;
     }
 
-<<<<<<< HEAD
-    @ApiOperation(value = "REST API to Sign user In to Blog application")
-=======
+
     @Autowired
     private SettingService settingService;
 
     @ApiOperation(value = "REST API to register or Signup user to Blog application")
->>>>>>> confirm_registration
     @PostMapping("/signin")
     public ResponseEntity<JWTAuthResponse> authenticationUser(@Valid @RequestBody LoginDto loginDto) {
         logger.info("Sign in User");
