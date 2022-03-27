@@ -8,9 +8,15 @@ import com.gamersfamily.gamersfamily.model.User;
 import com.gamersfamily.gamersfamily.repository.RoleRepository;
 import com.gamersfamily.gamersfamily.repository.UserRepository;
 import com.gamersfamily.gamersfamily.security.JwtTokenProvider;
+import com.gamersfamily.gamersfamily.service.SettingService;
 import com.gamersfamily.gamersfamily.service.UserService;
+import com.gamersfamily.gamersfamily.utils.mail.EmailSettingBag;
+import com.gamersfamily.gamersfamily.utils.mail.SettingUtility;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,8 +24,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -27,15 +38,17 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
+    private final SettingService settingService;
 
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
                            RoleRepository roleRepository, AuthenticationManager authenticationManager,
-                           JwtTokenProvider tokenProvider) {
+                           JwtTokenProvider tokenProvider, SettingService settingService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.authenticationManager = authenticationManager;
         this.tokenProvider = tokenProvider;
+        this.settingService = settingService;
     }
 
     @Override
@@ -85,5 +98,32 @@ public class UserServiceImpl implements UserService {
             userRepository.enable(user.getId());
             return true;
         }
+    }
+
+    public void sendVerificationEmail(HttpServletRequest request, SignUpDto user) throws MessagingException, UnsupportedEncodingException {
+        EmailSettingBag emailSettings = settingService.getEmailSettings();
+        JavaMailSender mailSender = SettingUtility.prepareMailSender(emailSettings);
+
+        String toAddress = user.getEmail();
+        String subject = emailSettings.getUserVerifySubject();
+        String content = emailSettings.getCustomerVerifyContent();
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(emailSettings.getFromAddress(),emailSettings.getSenderName());
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", user.getUsername());
+        log.info(content);
+        String verifyURL = SettingUtility.getSiteURL(request) + "/api/v1/auth/verify?code=" + user.getVerificationcode();
+
+        log.info("VERIFY URL value: " + verifyURL);
+        content = content.replace("[[URL]]",verifyURL);
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
     }
 }

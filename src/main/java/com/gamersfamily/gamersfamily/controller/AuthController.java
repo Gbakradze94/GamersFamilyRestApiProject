@@ -56,37 +56,12 @@ public class AuthController {
     @ApiOperation(value = "REST API to Register user to Blog application")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
-        sendVerificationEmail(request, signUpDto);
+        userService.sendVerificationEmail(request, signUpDto);
         logger.info("Registering User");
         return userService.registerUser(signUpDto);
     }
 
-    private void sendVerificationEmail(HttpServletRequest request, SignUpDto user) throws MessagingException, UnsupportedEncodingException {
-        EmailSettingBag emailSettings = settingService.getEmailSettings();
-        JavaMailSender mailSender = SettingUtility.prepareMailSender(emailSettings);
 
-        String toAddress = user.getEmail();
-        String subject = emailSettings.getUserVerifySubject();
-        String content = emailSettings.getCustomerVerifyContent();
-
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom(emailSettings.getFromAddress(),emailSettings.getSenderName());
-        helper.setTo(toAddress);
-        helper.setSubject(subject);
-
-        content = content.replace("[[name]]", user.getUsername());
-        logger.info(content);
-        String verifyURL = SettingUtility.getSiteURL(request) + "/api/v1/auth/verify?code=" + user.getVerificationcode();
-
-        logger.info("VERIFY URL value: " + verifyURL);
-        content = content.replace("[[URL]]",verifyURL);
-
-        helper.setText(content, true);
-
-        mailSender.send(message);
-    }
 
     @GetMapping("/verify")
     public ResponseEntity<HttpStatus> verifyAccount(@Param("code") String code) {
