@@ -26,7 +26,5 @@ public class SignUpDto {
     private String password;
 
 
-    private String verificationcode;
-
     private boolean enabled;
 }
