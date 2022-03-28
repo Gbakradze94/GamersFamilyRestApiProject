@@ -56,9 +56,10 @@ public class AuthController {
     @ApiOperation(value = "REST API to Register user to Blog application")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+        userService.registerUser(signUpDto);
         userService.sendVerificationEmail(request, signUpDto);
         logger.info("Registering User");
-        return userService.registerUser(signUpDto);
+        return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
     }
 
 

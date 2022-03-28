@@ -3,6 +3,7 @@ package com.gamersfamily.gamersfamily.service.serviceimpl;
 import com.gamersfamily.gamersfamily.dto.JWTAuthResponse;
 import com.gamersfamily.gamersfamily.dto.LoginDto;
 import com.gamersfamily.gamersfamily.dto.SignUpDto;
+import com.gamersfamily.gamersfamily.dto.UserDto;
 import com.gamersfamily.gamersfamily.model.Role;
 import com.gamersfamily.gamersfamily.model.User;
 import com.gamersfamily.gamersfamily.repository.RoleRepository;
@@ -12,8 +13,10 @@ import com.gamersfamily.gamersfamily.service.SettingService;
 import com.gamersfamily.gamersfamily.service.UserService;
 import com.gamersfamily.gamersfamily.utils.mail.EmailSettingBag;
 import com.gamersfamily.gamersfamily.utils.mail.SettingUtility;
+import io.swagger.models.Model;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -92,11 +95,14 @@ public class UserServiceImpl implements UserService {
 
         String token = tokenProvider.generateToken(authentication);
 
-//        User user = userRepository.findByEmail(loginDto.getEmail()).get();
-//        if(user.enabled == true){
-//
-//        }
-        return ResponseEntity.ok(new JWTAuthResponse(token));
+        User user = userRepository.findByEmail(loginDto.getEmail()).get();
+
+        if(user.enabled){
+            return ResponseEntity.ok(new JWTAuthResponse(token));
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
     }
 
     public boolean verify(String verificationCode) {
@@ -110,11 +116,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public void sendVerificationEmail(HttpServletRequest request, SignUpDto user) throws MessagingException, UnsupportedEncodingException {
+    public void sendVerificationEmail(HttpServletRequest request, SignUpDto signUpDto) throws MessagingException, UnsupportedEncodingException {
         EmailSettingBag emailSettings = settingService.getEmailSettings();
         JavaMailSender mailSender = SettingUtility.prepareMailSender(emailSettings);
 
-        String toAddress = user.getEmail();
+        User user = userRepository.findByEmail(signUpDto.getEmail()).get();
+
+
+        String toAddress = signUpDto.getEmail();
+        log.info("MAIL: " + toAddress);
         String subject = emailSettings.getUserVerifySubject();
         String content = emailSettings.getCustomerVerifyContent();
 
@@ -125,7 +135,7 @@ public class UserServiceImpl implements UserService {
         helper.setTo(toAddress);
         helper.setSubject(subject);
 
-        content = content.replace("[[name]]", user.getUsername());
+        content = content.replace("[[name]]", signUpDto.getUsername());
         log.info(content);
         String verifyURL = SettingUtility.getSiteURL(request) + "/api/v1/auth/verify?code=" + user.getVerificationcode();
 
