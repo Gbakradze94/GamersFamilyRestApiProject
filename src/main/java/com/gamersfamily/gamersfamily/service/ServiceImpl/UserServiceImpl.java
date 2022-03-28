@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
         user.setVerificationcode(verificationCode);
-        user.setEnabled(signUpDto.isEnabled());
+        user.setEnabled(false);
 
         if(roleRepository.findByName("ROLE_USER").isEmpty()){
             return new ResponseEntity<>("Role_User Does not Exist in Database", HttpStatus.BAD_REQUEST);
