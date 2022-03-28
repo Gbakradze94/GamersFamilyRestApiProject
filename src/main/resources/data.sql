@@ -1,3 +1,5 @@
+INSERT INTO Users VALUES(100,1,'hello@gmail.com',false,'password','hello12','verification_code');
+INSERT INTO Roles VALUES(102,1,'ROLE_USER');
 INSERT INTO Settings VALUES('MAIL_FROM','MAIL_SERVER','spacestore@gmail.com');
 INSERT INTO Settings VALUES('MAIL_HOST','MAIL_SERVER','smtp.gmail.com');
 INSERT INTO Settings VALUES('MAIL_PASSWORD','MAIL_SERVER','crjyasxnbecjcola');

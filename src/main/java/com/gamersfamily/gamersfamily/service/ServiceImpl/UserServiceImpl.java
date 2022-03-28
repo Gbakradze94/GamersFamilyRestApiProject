@@ -13,6 +13,7 @@ import com.gamersfamily.gamersfamily.service.UserService;
 import com.gamersfamily.gamersfamily.utils.mail.EmailSettingBag;
 import com.gamersfamily.gamersfamily.utils.mail.SettingUtility;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -61,11 +62,14 @@ public class UserServiceImpl implements UserService {
         if(userRepository.existsByEmail(signUpDto.getEmail())){
             return new ResponseEntity<>("Email is already taken", HttpStatus.BAD_REQUEST);
         }
+
+        String verificationCode = RandomString.make(64);
+
         User user = new User();
         user.setUsername(signUpDto.getUsername());
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
-        user.setVerificationcode(signUpDto.getVerificationcode());
+        user.setVerificationcode(verificationCode);
         user.setEnabled(signUpDto.isEnabled());
 
         if(roleRepository.findByName("ROLE_USER").isEmpty()){
