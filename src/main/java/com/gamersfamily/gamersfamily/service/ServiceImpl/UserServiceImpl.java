@@ -29,6 +29,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -86,6 +87,11 @@ public class UserServiceImpl implements UserService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = tokenProvider.generateToken(authentication);
+
+//        User user = userRepository.findByEmail(loginDto.getEmail()).get();
+//        if(user.enabled == true){
+//
+//        }
         return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
