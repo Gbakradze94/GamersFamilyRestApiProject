@@ -25,6 +25,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -120,7 +121,8 @@ public class UserServiceImpl implements UserService {
         EmailSettingBag emailSettings = settingService.getEmailSettings();
         JavaMailSender mailSender = SettingUtility.prepareMailSender(emailSettings);
 
-        User user = userRepository.findByEmail(signUpDto.getEmail()).get();
+        User user = userRepository.findByEmail(signUpDto.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User with the email could not be found."));
 
 
         String toAddress = signUpDto.getEmail();
