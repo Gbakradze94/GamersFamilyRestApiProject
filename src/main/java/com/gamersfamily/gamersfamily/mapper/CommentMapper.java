@@ -2,6 +2,8 @@ package com.gamersfamily.gamersfamily.mapper;
 
 import com.gamersfamily.gamersfamily.dto.CommentDto;
 import com.gamersfamily.gamersfamily.dto.CommentDtoOutput;
+import com.gamersfamily.gamersfamily.dto.CommentOriginalDto;
+import com.gamersfamily.gamersfamily.dto.NewsDto;
 import com.gamersfamily.gamersfamily.model.Comment;
 import com.gamersfamily.gamersfamily.model.News;
 import com.gamersfamily.gamersfamily.model.User;
@@ -47,5 +49,13 @@ public class CommentMapper {
                 .addMappings(mapper -> mapper.using(toNewsConverter).map(CommentDto::getNewsId, Comment::setNews))
                 .map(dto);
 
+    }
+
+    public CommentOriginalDto entityToOriginalDto(Comment comment){
+        return modelMapper.map(comment, CommentOriginalDto.class);
+    }
+
+    public Comment originalDtoToEntity(CommentOriginalDto commentOriginalDto){
+        return modelMapper.map(commentOriginalDto, Comment.class);
     }
 }

@@ -1,5 +1,8 @@
 package com.gamersfamily.gamersfamily.dto;
 
+import com.gamersfamily.gamersfamily.model.Game;
+import com.gamersfamily.gamersfamily.model.News;
+import com.gamersfamily.gamersfamily.model.User;
 import com.gamersfamily.gamersfamily.utils.enums.Rate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,21 +16,22 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class RatingDto {
     @Builder
-    private static RatingDto of(Rate rate, long userId, long newsId) {
+    private static RatingDto of(Rate rate, User userId, News newsId, Game gameId) {
         RatingDto dto = new RatingDto();
         dto.rate = rate;
-        dto.newsId = newsId;
-        dto.userId = userId;
+        dto.news = newsId;
+        dto.user = userId;
+        dto.game = gameId;
         return dto;
     }
 
     @NotNull
     private Rate rate;
     @NotNull
-    private long userId;
+    private User user;
 
-    private long newsId;
+    private News news;
 
-    private long gameId;
+    private Game game;
 
 }

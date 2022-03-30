@@ -33,7 +33,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public RatingOutputDto saveRating(RatingDto rating) {
-        User user = userRepository.findById(rating.getUserId())
+        User user = userRepository.findById(rating.getUser().getId())
                 .orElseThrow(() -> {
                     throw new BlogAPIException("no user with given id found", HttpStatus.BAD_REQUEST);
                 });
@@ -41,7 +41,7 @@ public class RatingServiceImpl implements RatingService {
             throw new BlogAPIException("rating does not belong to the authenticated user", HttpStatus.BAD_REQUEST);
         }
         Rating ratingResult = user.getRatings().stream()
-                .filter(src -> src.getNews().getId() == rating.getNewsId())
+                .filter(src -> src.getNews().getId() == rating.getNews().getId())
                 .findFirst()
                 .orElseGet(() -> ratingRepository.save(ratingMapper.dtoToEntity(rating)));
         return ratingMapper.entityToDto(ratingResult);
@@ -77,7 +77,7 @@ public class RatingServiceImpl implements RatingService {
         ratingFound.setRate(rating.getRate());
         if (!ratingFound.getAuthor().getEmail().equals(getAuthenticatedUserEmail())) {
             throw new BlogAPIException("rating does not belong to the authenticated user", HttpStatus.BAD_REQUEST);
-        } else if (ratingFound.getNews().getId() != rating.getNewsId()) {
+        } else if (ratingFound.getNews().getId() != rating.getNews().getId()) {
             throw new BlogAPIException("news id does not belong to this rating ", HttpStatus.BAD_REQUEST);
         } else {
             return ratingMapper.entityToDto(ratingRepository.save(ratingFound));
