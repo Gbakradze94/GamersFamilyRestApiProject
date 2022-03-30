@@ -1,7 +1,9 @@
 package com.gamersfamily.gamersfamily.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gamersfamily.gamersfamily.model.Comment;
 import com.gamersfamily.gamersfamily.model.Rating;
+import com.gamersfamily.gamersfamily.utils.enums.Rate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -29,7 +31,21 @@ public class NewsDto {
     @ApiModelProperty(value = "News body")
     private String body;
     @ApiModelProperty(value = "News comments")
+    @JsonIgnore
     private List<Comment> comments;
+    @JsonIgnore
     @ApiModelProperty(value = "News ratings")
     private List<Rating> ratings;
+
+    private Double Rating;
+
+    public void setRating(List<Rate> ratings) {
+
+        double sum = 0;
+        for (Rate r: ratings) {
+            sum = sum + r.getRate();
+        }
+
+        this.Rating = sum / ratings.size();
+    }
 }

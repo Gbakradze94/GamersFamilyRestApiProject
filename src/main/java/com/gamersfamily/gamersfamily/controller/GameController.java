@@ -37,7 +37,7 @@ public class GameController {
 
     @ApiOperation(value = "Gets games by page number and quantity of games on each page.")
     @GetMapping("/gamesByPage")
-    public ResponseEntity<List<GameOriginalDto>> getGamesByPage(@RequestParam Integer pageNumber,
+    public ResponseEntity<List<GameOriginalRatingDto>> getGamesByPage(@RequestParam Integer pageNumber,
                                                         @RequestParam Integer pageSize) {
         return new ResponseEntity<>(gameService.getGamesByPage(pageNumber, pageSize), HttpStatus.OK);
     }
@@ -72,19 +72,19 @@ public class GameController {
 
     @ApiOperation(value = "Gets all games from database by platform.")
     @GetMapping("/gamesByPlatform/{platform}")
-    public ResponseEntity<List<GameOriginalDto>> getGamesByPlatform(@RequestParam("platform") String platform) {
+    public ResponseEntity<List<GameOriginalRatingDto>> getGamesByPlatform(@RequestParam("platform") String platform) {
         return new ResponseEntity<>(gameService.getAllGamesByPlatform(platform), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Gets all games from database by tag.")
     @GetMapping("/gamesByTag/{tag}")
-    public ResponseEntity<List<GameOriginalDto>> getGamesByTag(@RequestParam("tag") String tag) {
+    public ResponseEntity<List<GameOriginalRatingDto>> getGamesByTag(@RequestParam("tag") String tag) {
         return new ResponseEntity<>(gameService.getAllGamesByTag(tag), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Gets all games from database by category.")
     @GetMapping("/gamesByCategory/{category}")
-    public ResponseEntity<List<GameOriginalDto>> getGamesByCategory(@RequestParam("category") String category) {
+    public ResponseEntity<List<GameOriginalRatingDto>> getGamesByCategory(@RequestParam("category") String category) {
         return new ResponseEntity<>(gameService.getAllGamesByCategory(category), HttpStatus.OK);
     }
 }

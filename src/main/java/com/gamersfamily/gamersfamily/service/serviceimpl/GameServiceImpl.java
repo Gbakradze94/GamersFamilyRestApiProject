@@ -63,33 +63,33 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<GameOriginalDto> getGamesByPage(Integer pageNumber, Integer pageSize) {
+    public List<GameOriginalRatingDto> getGamesByPage(Integer pageNumber, Integer pageSize) {
         Pageable pages = PageRequest.of(pageNumber,pageSize);
         return gameRepository.findAll(pages)
                 .getContent()
                 .stream()
-                .map(gameMapper::originalEntityToDto)
+                .map(gameMapper::originalDtoToRatingEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<GameOriginalDto> getAllGamesByPlatform(String platform) {
+    public List<GameOriginalRatingDto> getAllGamesByPlatform(String platform) {
         return gameRepository.findByPlatforms_NameIgnoreCase(platform)
-                .stream().map(gameMapper::originalEntityToDto)
+                .stream().map(gameMapper::originalDtoToRatingEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<GameOriginalDto> getAllGamesByTag(String tag) {
+    public List<GameOriginalRatingDto> getAllGamesByTag(String tag) {
         return gameRepository.findByTags_NameIgnoreCase(tag)
-                .stream().map(gameMapper::originalEntityToDto)
+                .stream().map(gameMapper::originalDtoToRatingEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<GameOriginalDto> getAllGamesByCategory(String category) {
+    public List<GameOriginalRatingDto> getAllGamesByCategory(String category) {
         return gameRepository.findByCategories_NameIgnoreCase(category)
-                .stream().map(gameMapper::originalEntityToDto)
+                .stream().map(gameMapper::originalDtoToRatingEntity)
                 .collect(Collectors.toList());
     }
 

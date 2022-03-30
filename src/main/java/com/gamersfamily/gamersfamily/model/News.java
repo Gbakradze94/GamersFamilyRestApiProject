@@ -1,5 +1,7 @@
 package com.gamersfamily.gamersfamily.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,8 +33,10 @@ public class News extends BaseEntity {
     //@Lob
     @Column(name = "body", nullable = false)
     private String body;
+
     @OneToMany(mappedBy = "news")
     private List<Comment> comments;
+
     @OneToMany(mappedBy = "news")
     private List<Rating> ratings;
 

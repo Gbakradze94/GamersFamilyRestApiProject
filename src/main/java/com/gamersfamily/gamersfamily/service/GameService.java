@@ -14,13 +14,13 @@ public interface GameService {
 
     List<GameOriginalRatingDto> getAllGames();
 
-    List<GameOriginalDto> getGamesByPage(Integer pageNumber, Integer pageSize);
+    List<GameOriginalRatingDto> getGamesByPage(Integer pageNumber, Integer pageSize);
 
-    List<GameOriginalDto> getAllGamesByPlatform(String platform);
+    List<GameOriginalRatingDto> getAllGamesByPlatform(String platform);
 
-    List<GameOriginalDto> getAllGamesByTag(String tag);
+    List<GameOriginalRatingDto> getAllGamesByTag(String tag);
 
-    List<GameOriginalDto> getAllGamesByCategory(String category);
+    List<GameOriginalRatingDto> getAllGamesByCategory(String category);
 
     Game saveGame(GameDto gameDto);
 

@@ -8,6 +8,7 @@ public class GamersFamilyRestApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GamersFamilyRestApiApplication.class, args);
+
 	}
 
 
