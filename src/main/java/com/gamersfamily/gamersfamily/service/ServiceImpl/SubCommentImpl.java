@@ -37,7 +37,7 @@ public class SubCommentImpl implements SubCommentService {
                 .orElseThrow(() -> {
                     throw new BlogAPIException("no user with given id found", HttpStatus.BAD_REQUEST);
                 });
-        if (!user.getEmail().equals(getAuthenticatedUserEmail())) {
+        if (!user.getEmail().equals(getAuthenticatedUserEmail()) && user.isEnabled()) {
             throw new BlogAPIException("subComment does not belong to the authenticated user", HttpStatus.BAD_REQUEST);
         }
         return subCommentMapper.entityToDto(subCommentRepository.save(subCommentMapper.dtoToEntity(subComment)));
@@ -58,7 +58,7 @@ public class SubCommentImpl implements SubCommentService {
                 });
         subCommentFound.setBody(subComment.getBody());
         subCommentFound.setUpdated(subComment.getUpdated());
-        if (!subCommentFound.getAuthor().getEmail().equals(getAuthenticatedUserEmail())) {
+        if (!subCommentFound.getAuthor().getEmail().equals(getAuthenticatedUserEmail())  && subCommentFound.getAuthor().isEnabled() ) {
             throw new BlogAPIException("subComment author does not belong to the authenticated user", HttpStatus.BAD_REQUEST);
         } else if (subCommentFound.getComment().getId() != subComment.getCommentId()) {
             throw new BlogAPIException("subcomment id does not belong to this comment", HttpStatus.BAD_REQUEST);
@@ -74,7 +74,7 @@ public class SubCommentImpl implements SubCommentService {
         SubComment subComment = subCommentRepository.findById(subCommentId).orElseThrow(() -> {
             throw new BlogAPIException("subComment with this id can not be found to delete", HttpStatus.BAD_REQUEST);
         });
-        if (subComment.getAuthor().getEmail().equals(getAuthenticatedUserEmail())) {
+        if (subComment.getAuthor().getEmail().equals(getAuthenticatedUserEmail()) && subComment.getAuthor().isEnabled()) {
             SubCommentDtoOutput output = subCommentMapper.entityToDto(subComment);
             subCommentRepository.delete(subComment);
             return output;
